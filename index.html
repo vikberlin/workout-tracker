@@ -496,46 +496,5 @@ ST.dayIdx=todayMap[new Date().getDay()]??0;
 render();
 </script>
 
-<!-- UPDATED APPS SCRIPT — paste this into Google Apps Script replacing previous version -->
-<!--
-function doPost(e) {
-  try {
-    const data = JSON.parse(e.postData.contents);
-    if (data.secret !== SECRET_KEY) return resp({error:"Unauthorized"});
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    
-    // Save progress to a hidden sheet as JSON
-    let store = ss.getSheetByName("_store");
-    if (!store) { store = ss.insertSheet("_store"); store.hideSheet(); }
-    store.clearContents();
-    store.getRange(1,1).setValue(JSON.stringify({progress: data.progress, weights: data.weights, ts: data.ts}));
-    
-    // Also write readable history log
-    let log = ss.getSheetByName("Sync Log");
-    if (!log) { log = ss.insertSheet("Sync Log"); log.appendRow(["Timestamp","Action"]); }
-    log.appendRow([new Date(data.ts), "push"]);
-    
-    return resp({success:true});
-  } catch(err) { return resp({error:err.toString()}); }
-}
-
-function doGet(e) {
-  try {
-    const secret = e.parameter.secret;
-    if (secret !== SECRET_KEY) return resp({error:"Unauthorized"});
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const store = ss.getSheetByName("_store");
-    if (!store) return resp({progress:{}, weights:{}});
-    const raw = store.getRange(1,1).getValue();
-    if (!raw) return resp({progress:{}, weights:{}});
-    const data = JSON.parse(raw);
-    return resp({progress: data.progress||{}, weights: data.weights||{}});
-  } catch(err) { return resp({error:err.toString()}); }
-}
-
-function resp(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
-}
--->
 </body>
 </html>

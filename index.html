@@ -12,7 +12,7 @@ html,body{background:#0e0e10;color:#f0f0f4;font-family:-apple-system,BlinkMacSys
 :root{--accent:#c8f060;--bg:#0e0e10;--card:#18181c;--card2:#22222a;--border:#2e2e38;--text:#f0f0f4;--muted:#888898}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input{font-family:inherit;font-size:14px;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 10px;width:100%}
-.hdr{background:var(--card);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.hdr{background:var(--card);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
 .hdr-title{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
 .hdr-name{font-size:18px;font-weight:700}
 .badge{border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600}
@@ -24,17 +24,38 @@ input{font-family:inherit;font-size:14px;background:var(--card2);border:1px soli
 .nav-btn{flex:1;padding:12px 0;border-bottom:2px solid transparent;font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:capitalize;color:var(--muted)}
 .nav-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
 .pad{padding:14px 14px 80px}
-.week-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.week-scroll{flex:1;display:flex;gap:4px;overflow-x:auto;padding:2px 0;scrollbar-width:none}
-.week-scroll::-webkit-scrollbar{display:none}
-.wbtn{min-width:34px;height:34px;border-radius:8px;font-size:12px;font-weight:700;border:1px solid;flex-shrink:0;position:relative}
-.nav-arrow{width:30px;height:30px;border-radius:8px;background:var(--card2);border:1px solid var(--border);font-size:16px;display:flex;align-items:center;justify-content:center}
-.day-row{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
-.day-row::-webkit-scrollbar{display:none}
-.dbtn{flex-shrink:0;padding:8px 12px;border-radius:10px;font-size:11px;font-weight:600;border:1px solid;text-align:center;min-width:48px}
+
+/* ── CALENDAR BUTTON ── */
+.cal-btn{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:10px 14px;width:100%;margin-bottom:14px;position:relative}
+.cal-btn-left{flex:1;text-align:left}
+.cal-btn-date{font-size:16px;font-weight:700;color:var(--text)}
+.cal-btn-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.cal-btn-right{display:flex;align-items:center;gap:8px}
+.cal-phase{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;border:1px solid}
+.cal-chevron{font-size:12px;color:var(--muted);transition:transform .2s}
+.cal-chevron.open{transform:rotate(180deg)}
+
+/* ── CALENDAR DROPDOWN ── */
+.cal-overlay{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.5)}
+.cal-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:300;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.cal-week-tabs{display:flex;overflow-x:auto;padding:10px 10px 0;gap:4px;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.cal-week-tabs::-webkit-scrollbar{display:none}
+.cwt{flex-shrink:0;padding:6px 10px;border-radius:8px 8px 0 0;font-size:11px;font-weight:700;border:1px solid;border-bottom:none;cursor:pointer;transition:all .15s}
+.cwt.active{background:var(--accent);border-color:var(--accent);color:#000}
+.cal-days{padding:10px}
+.cal-day-row{display:flex;align-items:center;padding:9px 10px;border-radius:10px;cursor:pointer;transition:background .15s;gap:10px}
+.cal-day-row:hover{background:var(--card2)}
+.cal-day-row.active{background:var(--accent)18;border:1px solid var(--accent)44}
+.cal-day-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cal-day-name{font-size:13px;font-weight:600;min-width:80px}
+.cal-day-label{font-size:11px;color:var(--muted);flex:1}
+.cal-day-pct{font-size:11px;font-weight:700;min-width:32px;text-align:right}
+
+/* ── CURRENT SELECTION HEADER ── */
 .day-hdr{margin-bottom:14px}
 .day-hdr h2{font-size:18px;font-weight:700}
 .day-hdr p{font-size:13px;color:var(--muted)}
+
 .session-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden}
 .session-hdr{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .session-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
@@ -65,6 +86,459 @@ input{font-family:inherit;font-size:14px;background:var(--card2);border:1px soli
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer}
 .bar-inner{width:100%;height:100px;display:flex;align-items:flex-end}
 .bar{width:100%;border-radius:3px 3px 0 0;min-height:4px;transition:height .3s}
+.bar-lbl{font-size:9px;margin-top:4px}
+.phase-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.phase-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
+.phase-section h3{font-size:13px;font-weight:600;margin-bottom:14px}
+.phase-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.pbar-wrap{flex:1}
+.pbar-top{display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;font-weight:600}
+.pbar-bg{width:100%;height:4px;background:var(--border);border-radius:2px}
+.pbar-fill{height:100%;border-radius:2px}
+.pbar-desc{font-size:11px;color:var(--muted);margin-top:3px}
+.bk-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
+.bk-section h3{font-size:13px;font-weight:600;margin-bottom:10px}
+.bk-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.bk-btn{flex:1;min-width:120px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid;text-align:center;cursor:pointer}
+.bk-green{background:var(--accent)22;border-color:var(--accent)55;color:var(--accent)}
+.bk-neutral{background:var(--card2);border-color:var(--border);color:var(--text)}
+.bk-red{background:#ff4a6e22;border-color:#ff4a6e44;color:#ff4a6e}
+.sh-label{font-size:12px;color:var(--muted);margin-bottom:4px;margin-top:10px}
+.sh-save{width:100%;padding:11px;border-radius:10px;background:var(--accent);border:none;font-size:14px;font-weight:700;color:#000;margin-top:10px;cursor:pointer}
+.sync-row{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:8px}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.sdot.on{background:var(--accent)}
+.sdot.err{background:#ff4a6e}
+
+/* sync button in header */
+.sync-btn{display:flex;align-items:center;gap:5px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:11px;font-weight:600;color:var(--muted)}
+.sync-btn.syncing{color:var(--accent);border-color:var(--accent)44}
+.sync-btn.err{color:#ff4a6e;border-color:#ff4a6e44}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;animation:spin .8s linear infinite}
+
+.dot-done{position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.chk-svg{display:block}
+.run-check-wrap{display:flex;align-items:center;justify-content:center;width:32px;height:32px;cursor:pointer;flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const SK='tr_prog_v3',WK='tr_wts_v3',CK='tr_cfg_v3';
+const PC={Base:'#4a9eff',Volume:'#c8f060',Intensity:'#ff9a4a',Peak:'#ff4a6e',Deload:'#a78bfa'};
+const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const DAY_SHORT=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+// ── BUILD WEEK ───────────────────────────────────────────────
+function bw(w){
+  const dld=w===16,pk=w>=13&&w<=15,it=w>=9&&w<=12,vl=w>=5&&w<=8;
+  const s=b=>dld?Math.max(2,b-1):pk?b+2:it?b+1:vl?b+1:b;
+  const r=(a,b)=>`${a}–${b}`;
+  const re=dld?4:pk?7:it?6.5:vl?5.5:5;
+  const rl=dld?'45–60 min easy':pk?'100–120 min easy':it?'90–100 min easy':vl?'75–90 min easy':'60–90 min easy';
+  const sm=dld?5:pk?8:it?7:vl?6.5:6;
+  const rp=dld?6:pk?10:it?9:vl?8:8;
+  const pu=dld?75:pk?150:it?125:vl?110:100;
+  const pl=dld?35:pk?75:it?65:vl?55:50;
+  const pr=pk?'4–6':'6–8';const sq=pk?'3–5':it?'4–5':'5';
+  const odd=w%2!==0;
+  const sd=odd?`${sm} miles — 1mi warm-up · ${rp}× 800m repeats (90s rest) · 1mi cool-down`:`${sm} miles — 1mi warm-up · 4mi negative splits (each mile faster) · 1mi cool-down`;
+  const mon=odd?[
+    {n:'Leg Extensions',s:s(5),r:r(10,12)},{n:'Leg Curls',s:s(5),r:r(10,12)},
+    {n:'Bulgarian Split Squats',s:s(3),r:r(10,12)},{n:'Barbell Squats',s:s(5),r:sq},
+    {n:'Walking Barbell Lunges',s:s(4),r:'20 (10 each)'},
+  ]:[
+    {n:'Leg Extensions',s:s(4),r:r(10,12)},{n:'Leg Curls',s:s(4),r:r(10,12)},
+    {n:'Dumbbell Romanian Deadlift',s:s(3),r:r(10,12)},{n:'Back Squat',s:s(4),r:pk?'5–6':it?'6–8':'8–10'},
+    {n:'Walking Barbell Lunges',s:s(3),r:'20 (10 each)'},{n:'Weighted Back Extensions',s:s(3),r:r(10,15)},
+  ];
+  const tue=odd?[
+    {n:`${pu} Push-Ups`,s:1,r:'total',bw:1},{n:`${pl} Pull-Ups`,s:1,r:'total',bw:1},
+    {n:'DB Lateral Raise',s:s(5),r:r(12,15)},{n:'Rear Delt Fly',s:s(3),r:r(12,15)},
+    {n:'Barbell Overhead Press',s:s(4),r:pr},{n:'Front Plate Raises',s:s(4),r:r(12,15)},
+    {n:'Seated DB Shoulder Press',s:s(3),r:r(10,12)},
+    {n:'DB Bicep Curl',s:s(3),r:'10',ss:'SS1'},{n:'Bodyweight Dips',s:s(3),r:'AMRAP',ss:'SS1',bw:1},
+    {n:'Tricep Pushdown',s:s(3),r:'15',ss:'SS2'},{n:'Barbell Curl',s:s(3),r:'10',ss:'SS2'},
+  ]:[
+    {n:`${pl} Pull-Ups`,s:1,r:'total',bw:1},{n:'DB Lateral Raise',s:s(5),r:r(12,15)},
+    {n:'Cable Face Pulls',s:s(3),r:r(12,15)},{n:'Barbell Overhead Press',s:s(4),r:pr},
+    {n:'Upright Rows',s:s(4),r:r(12,15)},{n:`${pu} Push-Ups`,s:1,r:'total',bw:1},
+    {n:'DB Hammer Curl',s:s(3),r:'10',ss:'SS1'},{n:'Bodyweight Dips',s:s(3),r:'AMRAP',ss:'SS1',bw:1},
+    {n:'Tricep Straight Bar Pushdown',s:s(3),r:'15',ss:'SS2'},{n:'Barbell Curl',s:s(3),r:'10',ss:'SS2'},
+  ];
+  const wed=odd?[
+    {n:'Pull-Ups',s:s(5),r:'AMRAP',bw:1},{n:'Low Cable Row',s:s(4),r:r(10,12)},
+    {n:'Lat Pulldown',s:s(4),r:r(10,12)},{n:'Barbell Row',s:s(3),r:r(8,10)},
+    {n:'Cable Pull-Throughs',s:s(4),r:r(12,15)},{n:'Back Extensions',s:s(3),r:'15',bw:1},
+    {n:'Hammer Curls',s:s(4),r:r(12,15)},{n:'Chin-Ups',s:s(4),r:'AMRAP',bw:1},
+  ]:[
+    {n:'Pull-Ups',s:s(5),r:'AMRAP',bw:1},{n:'Low Cable Row',s:s(4),r:r(10,12)},
+    {n:'Lat Pulldown',s:s(4),r:r(10,12)},{n:'Single Arm DB Row',s:s(3),r:r(8,10)},
+    {n:'Cable Pull-Throughs',s:s(4),r:r(12,15)},{n:'KB Swings',s:s(3),r:r(15,20)},
+    {n:'Dumbbell Bicep Curl',s:s(4),r:r(12,15)},{n:'Chin-Ups',s:s(4),r:'AMRAP',bw:1},
+  ];
+  const thu=odd?[
+    {n:`${pu} Push-Ups`,s:1,r:'total',bw:1},{n:'Cable Chest Fly',s:s(5),r:r(10,12)},
+    {n:'Incline Barbell Press',s:s(4),r:pr},{n:'Flat DB Chest Press',s:s(4),r:r(10,12)},
+    {n:'Bodyweight Dips',s:s(3),r:'AMRAP',bw:1},{n:'Skull Crushers',s:s(3),r:r(10,12)},
+    {n:'Overhead DB Tricep Ext.',s:s(3),r:r(12,15)},
+  ]:[
+    {n:`${pu} Push-Ups`,s:1,r:'total',bw:1},{n:'Cable Chest Fly',s:s(5),r:r(10,12)},
+    {n:'Barbell Bench Press',s:s(4),r:pr},{n:'Bodyweight Dips',s:s(4),r:'AMRAP',bw:1},
+    {n:'Incline DB Bench Press',s:s(4),r:r(10,12)},{n:'Skull Crushers',s:s(3),r:r(10,12)},
+    {n:'Overhead DB Tricep Ext.',s:s(3),r:r(12,15)},
+  ];
+  const fri=odd?[
+    {n:'Leg Extensions',s:s(4),r:r(10,12)},{n:'Reverse DB Lunges',s:s(4),r:r(10,12)},
+    {n:'Romanian Deadlift',s:s(4),r:r(8,10)},{n:'Leg Press',s:s(4),r:r(10,12)},
+    {n:'Leg Curl',s:s(4),r:r(12,15)},{n:'Calf Raises',s:s(3),r:r(15,20)},
+  ]:[
+    {n:'Leg Extensions',s:s(4),r:r(10,12)},{n:'Sissy Squats',s:s(3),r:'AMRAP',bw:1},
+    {n:'Hamstring Curl',s:s(4),r:r(12,15)},{n:'Bulgarian Split Squat',s:s(4),r:r(8,10)},
+    {n:'Leg Press',s:s(5),r:r(10,12)},{n:'Calf Raises',s:s(3),r:r(15,20)},
+  ];
+  const ph=dld?'Deload':pk?'Peak':it?'Intensity':vl?'Volume':'Base';
+  return{phase:ph,days:[
+    {name:'Monday',   label:'Run + Lower Body',   sessions:[{type:'run',name:'Morning Run',detail:`${re}-mile easy aerobic run`},{type:'strength',name:'Lower Body',exercises:mon}]},
+    {name:'Tuesday',  label:'Shoulders & Arms',   sessions:[{type:'strength',name:'Shoulders & Arms',exercises:tue}]},
+    {name:'Wednesday',label:'Run + Back & Biceps',sessions:[{type:'run',name:'Speed Workout',detail:sd},{type:'strength',name:'Back & Biceps',exercises:wed}]},
+    {name:'Thursday', label:'Chest & Triceps',    sessions:[{type:'strength',name:'Chest & Triceps',exercises:thu}]},
+    {name:'Friday',   label:'Run + Lower Body',   sessions:[{type:'run',name:'Morning Run',detail:`${re}-mile easy aerobic run`},{type:'strength',name:'Lower Body',exercises:fri}]},
+    {name:'Saturday', label:'Long Run',           sessions:[{type:'run',name:'Long Run',detail:rl}]},
+    {name:'Sunday',   label:'Rest & Recovery',    sessions:[{type:'rest',name:'Active Recovery',detail:'Foam rolling · stretching · yoga · optional walk'}]},
+  ]};
+}
+
+// ── WEIGHTS ─────────────────────────────────────────────────
+const DW={'Leg Extensions':40,'Leg Curls':35,'Bulgarian Split Squats':0,'Barbell Squats':135,'Walking Barbell Lunges':45,'Dumbbell Romanian Deadlift':50,'Back Squat':155,'Weighted Back Extensions':25,'DB Lateral Raise':20,'Rear Delt Fly':15,'Barbell Overhead Press':95,'Front Plate Raises':25,'Seated DB Shoulder Press':40,'Cable Face Pulls':40,'Upright Rows':75,'DB Bicep Curl':30,'DB Hammer Curl':32,'Tricep Pushdown':40,'Tricep Straight Bar Pushdown':45,'Barbell Curl':55,'Pull-Ups':0,'Chin-Ups':0,'Back Extensions':0,'Bodyweight Dips':0,'Sissy Squats':0,'Low Cable Row':120,'Lat Pulldown':110,'Barbell Row':135,'Single Arm DB Row':70,'Cable Pull-Throughs':50,'Hammer Curls':30,'KB Swings':53,'Dumbbell Bicep Curl':32,'Cable Chest Fly':30,'Incline Barbell Press':135,'Flat DB Chest Press':60,'Barbell Bench Press':155,'Incline DB Bench Press':65,'Skull Crushers':65,'Overhead DB Tricep Ext.':40,'Leg Press':270,'Leg Curl':0,'Hamstring Curl':0,'Calf Raises':0,'Romanian Deadlift':155,'Reverse DB Lunges':30,'Bulgarian Split Squat':30};
+const PROG={'Barbell Squats':5,'Back Squat':5,'Barbell Bench Press':5,'Incline Barbell Press':5,'Barbell Overhead Press':2.5,'Barbell Row':5,'Low Cable Row':2.5,'Lat Pulldown':2.5,'Leg Press':5,'Romanian Deadlift':5,'Dumbbell Romanian Deadlift':2.5,'Flat DB Chest Press':2.5,'Incline DB Bench Press':2.5,'Skull Crushers':2.5,'DB Lateral Raise':1.25,'Hammer Curls':1.25,'DB Hammer Curl':1.25,'DB Bicep Curl':1.25,'Dumbbell Bicep Curl':1.25,'Barbell Curl':2.5,'Overhead DB Tricep Ext.':1.25,'Cable Chest Fly':1.25,'KB Swings':2.5};
+function sugWt(name,week){const base=DW[name];if(base===undefined||base===0)return null;return base+(PROG[name]||0)*Math.floor((week-1)/2);}
+
+// ── STATE ───────────────────────────────────────────────────
+let ST={view:'workout',week:1,dayIdx:0,progress:{},restSecs:60,timerActive:false,timerLeft:60,calOpen:false,calDropWeek:1,syncStatus:'idle'};
+let WTS={},CFG={url:'',key:''},TI=null;
+
+function load(){
+  try{ST.progress=JSON.parse(localStorage.getItem(SK)||'{}');}catch{}
+  try{WTS=JSON.parse(localStorage.getItem(WK)||'{}');}catch{}
+  try{const c=JSON.parse(localStorage.getItem(CK)||'{}');CFG={...CFG,...c};ST.restSecs=CFG.restSecs||60;}catch{}
+}
+function sv(){localStorage.setItem(SK,JSON.stringify(ST.progress));localStorage.setItem(WK,JSON.stringify(WTS));localStorage.setItem(CK,JSON.stringify({...CFG,restSecs:ST.restSecs}));}
+function getW(name,week){return WTS[name]!==undefined?WTS[name]:sugWt(name,week);}
+function getCh(){return ST.progress[`${ST.week}-${ST.dayIdx}`]||{};}
+function setCh(ch){ST.progress[`${ST.week}-${ST.dayIdx}`]=ch;sv();}
+
+// ── PROGRESS ────────────────────────────────────────────────
+function dayComp(w,di){
+  const d=bw(w).days[di];if(d.sessions[0]?.type==='rest')return 100;
+  let t=0,dn=0;const ch=ST.progress[`${w}-${di}`]||{};
+  d.sessions.forEach((s,si)=>{if(s.exercises)s.exercises.forEach((ex,ei)=>{for(let i=0;i<ex.s;i++){t++;if(ch[`${si}-${ei}-${i}`])dn++;}});else{t++;if(ch[`run-${si}`])dn++;}});
+  return t>0?Math.round(dn/t*100):0;
+}
+function weekComp(w){let t=0,d=0;bw(w).days.forEach((_,di)=>{if(bw(w).days[di].sessions[0]?.type==='rest')return;t+=100;d+=dayComp(w,di);});return t>0?Math.round(d/t):0;}
+function weekStats(w){let t=0,dn=0;bw(w).days.forEach((d,di)=>{if(d.sessions[0]?.type==='rest')return;const ch=ST.progress[`${w}-${di}`]||{};d.sessions.forEach((s,si)=>{if(s.exercises)s.exercises.forEach((ex,ei)=>{for(let i=0;i<ex.s;i++){t++;if(ch[`${si}-${ei}-${i}`])dn++;}});else{t++;if(ch[`run-${si}`])dn++;}});});return{t,dn,pct:t>0?Math.round(dn/t*100):0,phase:bw(w).phase};}
+
+// ── TIMER ───────────────────────────────────────────────────
+function startTimer(){clearInterval(TI);ST.timerLeft=ST.restSecs;ST.timerActive=true;TI=setInterval(()=>{ST.timerLeft--;if(ST.timerLeft<=0){clearInterval(TI);ST.timerActive=false;}renderTimer();},1000);renderTimer();}
+function stopTimer(){clearInterval(TI);ST.timerActive=false;ST.timerLeft=ST.restSecs;renderTimer();}
+function renderTimer(){const el=document.getElementById('tbr');if(!el)return;if(!ST.timerActive){el.style.display='none';return;}const hot=ST.timerLeft<=10,col=hot?'#ff4a6e':'#c8f060';el.style.display='flex';el.style.background=hot?'#ff4a6e22':'#c8f06018';el.style.borderBottomColor=col+'44';el.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="timer-circle" style="background:${col}">${ST.timerLeft}</div><div><div style="font-size:13px;font-weight:600;color:${col}">Rest timer</div><div style="font-size:11px;color:var(--muted)">Next set starts soon</div></div></div><button onclick="stopTimer()" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 14px;color:var(--muted);font-size:12px">Skip</button>`;}
+
+function chk(c){return `<svg class="chk-svg" width="9" height="8" viewBox="0 0 9 8"><polyline points="1,4 3.5,6.5 8,1" stroke="${c}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
+
+// ── DATE HELPERS ─────────────────────────────────────────────
+function todayLabel(){
+  const d=new Date();
+  const dayName=d.toLocaleDateString('en-US',{weekday:'long'});
+  const dateStr=d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return{dayName,dateStr};
+}
+function currentSelLabel(){
+  const WD=bw(ST.week);
+  const dayName=WD.days[ST.dayIdx].name;
+  const isTodayDay=DAYS[new Date().getDay()===0?6:new Date().getDay()-1]===dayName&&ST.week===currentTodayWeek();
+  return{dayName,label:WD.days[ST.dayIdx].label,isToday:isTodayDay,week:ST.week};
+}
+function currentTodayWeek(){return ST.week;} // user sets week manually
+
+// ── CALENDAR ────────────────────────────────────────────────
+function openCal(){ST.calOpen=true;ST.calDropWeek=ST.week;render();}
+function closeCal(){ST.calOpen=false;render();}
+function calSelWeek(w){ST.calDropWeek=w;renderCalDropdown();}
+function calSelDay(w,di){ST.week=w;ST.dayIdx=di;ST.calOpen=false;render();}
+
+function renderCalDropdown(){
+  const dd=document.getElementById('cal-dd');if(!dd)return;
+  const WD=bw(ST.calDropWeek);
+  let h=`<div class="cal-week-tabs">`;
+  for(let w=1;w<=16;w++){
+    const pc=PC[bw(w).phase],cur=w===ST.calDropWeek;
+    h+=`<button class="cwt ${cur?'active':''}" onclick="calSelWeek(${w})" style="${cur?'':'background:var(--card2);border-color:'+PC[bw(w).phase]+'33;color:'+PC[bw(w).phase]}">W${w}</button>`;
+  }
+  h+=`</div><div class="cal-days">`;
+  WD.days.forEach((d,i)=>{
+    const comp=dayComp(ST.calDropWeek,i);
+    const isRest=d.sessions[0]?.type==='rest';
+    const isActive=ST.calDropWeek===ST.week&&i===ST.dayIdx;
+    const col=PC[WD.phase];
+    const pctCol=comp===100?'var(--accent)':comp>0?col:'var(--muted)';
+    h+=`<div class="cal-day-row ${isActive?'active':''}" onclick="calSelDay(${ST.calDropWeek},${i})">
+      <div class="cal-day-dot" style="background:${isRest?'var(--border)':col}"></div>
+      <div class="cal-day-name" style="color:${isActive?'var(--accent)':'var(--text)'}">${d.name}</div>
+      <div class="cal-day-label">${d.label}</div>
+      <div class="cal-day-pct" style="color:${pctCol}">${isRest?'—':comp>0?comp+'%':''}</div>
+    </div>`;
+  });
+  h+=`</div>`;
+  dd.innerHTML=h;
+}
+
+// ── GOOGLE SHEETS TWO-WAY SYNC ────────────────────────────────
+async function syncPush(){
+  if(!CFG.url||!CFG.key)return;
+  try{
+    await fetch(CFG.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'push',secret:CFG.key,ts:new Date().toISOString(),progress:ST.progress,weights:WTS})});
+  }catch{}
+}
+
+async function syncPull(){
+  if(!CFG.url||!CFG.key){alert('Connect Google Sheets first in the Backup tab.');return;}
+  ST.syncStatus='syncing';renderSyncBtn();
+  try{
+    const res=await fetch(CFG.url+'?action=pull&secret='+encodeURIComponent(CFG.key),{method:'GET'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    if(data.error)throw new Error(data.error);
+    if(data.progress){ST.progress={...ST.progress,...data.progress};}
+    if(data.weights){WTS={...WTS,...data.weights};}
+    sv();
+    ST.syncStatus='ok';renderSyncBtn();
+    setTimeout(()=>{ST.syncStatus='idle';renderSyncBtn();},3000);
+    render();
+  }catch(e){
+    ST.syncStatus='err';renderSyncBtn();
+    setTimeout(()=>{ST.syncStatus='idle';renderSyncBtn();},4000);
+  }
+}
+
+function renderSyncBtn(){
+  const el=document.getElementById('sync-btn');if(!el)return;
+  if(ST.syncStatus==='syncing'){el.className='sync-btn syncing';el.innerHTML='<span class="spin">↻</span> Syncing...';}
+  else if(ST.syncStatus==='ok'){el.className='sync-btn syncing';el.innerHTML='✓ Synced';}
+  else if(ST.syncStatus==='err'){el.className='sync-btn err';el.innerHTML='⚠ Sync failed';}
+  else{el.className='sync-btn';el.innerHTML=CFG.url?'↻ Sync':'↻ Sync';}
+}
+
+// ── RENDER ───────────────────────────────────────────────────
+function render(){
+  const WD=bw(ST.week),day=WD.days[ST.dayIdx],pC=PC[WD.phase],ch=getCh();
+  const {dayName,dateStr}=todayLabel();
+  const selInfo=currentSelLabel();
+
+  let h=`
+  <div class="hdr">
+    <div><div class="hdr-title">16-Week Program</div><div class="hdr-name">Training</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="sync-btn" class="sync-btn" onclick="syncPull()">${CFG.url?'↻ Sync':'↻ Sync'}</button>
+      <div class="badge phase-badge" style="background:${pC}22;border-color:${pC}55;color:${pC}">${WD.phase}</div>
+    </div>
+  </div>
+  <div id="tbr" class="timer-bar" style="display:none"></div>
+  <div class="nav">
+    <button class="nav-btn ${ST.view==='workout'?'active':''}" onclick="setView('workout')">workout</button>
+    <button class="nav-btn ${ST.view==='progress'?'active':''}" onclick="setView('progress')">progress</button>
+    <button class="nav-btn ${ST.view==='backup'?'active':''}" onclick="setView('backup')">backup</button>
+  </div>`;
+
+  if(ST.view==='workout'){
+    const comp=dayComp(ST.week,ST.dayIdx);
+    h+=`<div class="pad">`;
+
+    // calendar button
+    h+=`<div style="position:relative">
+      <button class="cal-btn" onclick="openCal()">
+        <div class="cal-btn-left">
+          <div class="cal-btn-date">${selInfo.dayName} <span style="color:var(--muted);font-weight:400;font-size:13px">· W${ST.week}</span></div>
+          <div class="cal-btn-sub">${selInfo.label}${comp>0?' · '+comp+'% done':''}</div>
+        </div>
+        <div class="cal-btn-right">
+          <div class="cal-phase" style="background:${pC}18;border-color:${pC}44;color:${pC}">${WD.phase}</div>
+          <span class="cal-chevron ${ST.calOpen?'open':''}">▼</span>
+        </div>
+      </button>
+      ${ST.calOpen?`<div class="cal-dropdown" id="cal-dd"></div>`:''}
+    </div>`;
+
+    // sessions
+    day.sessions.forEach((ses,si)=>{
+      const iBg=ses.type==='run'?'#4a9eff22':ses.type==='rest'?'#a78bfa22':'#c8f06022';
+      const ico=ses.type==='run'?'🏃':ses.type==='rest'?'🧘':'💪';
+      const runDone=ch[`run-${si}`];
+      h+=`<div class="session-card"><div class="session-hdr">
+        <div class="session-icon" style="background:${iBg}">${ico}</div>
+        <div class="session-info"><h3>${ses.name}</h3>${ses.detail?`<p>${ses.detail}</p>`:''}</div>
+        ${!ses.exercises?`<div class="run-check-wrap" onclick="togRun(${si})"><div class="cb ${runDone?'done':''}">${runDone?chk('#000'):''}</div></div>`:''}
+      </div>`;
+      if(ses.exercises){
+        ses.exercises.forEach((ex,ei)=>{
+          const ds=Array.from({length:ex.s},(_,i)=>ch[`${si}-${ei}-${i}`]?1:0).reduce((a,b)=>a+b,0);
+          const ad=ds===ex.s;
+          const wt=ex.bw?null:getW(ex.n,ST.week);
+          h+=`<div class="ex-row"><div class="ex-hdr"><div style="flex:1">
+            <div class="ex-name" style="color:${ad?'var(--muted)':'var(--text)'};text-decoration:${ad?'line-through':'none'}">${ex.n}</div>
+            <div class="ex-meta">
+              <span>${ex.s} sets · ${ex.r}</span>
+              ${ex.ss?`<span class="ss-tag">SS ${ex.ss}</span>`:''}
+              ${!ex.bw&&wt!==null?`<div class="wt-row"><button class="wt-btn" onclick="adjWt('${ex.n.replace(/'/g,"\\'")}',${ST.week},-2.5,event)">−</button><span class="wt-val">${wt} lbs</span><button class="wt-btn" onclick="adjWt('${ex.n.replace(/'/g,"\\'")}',${ST.week},2.5,event)">+</button></div>`:ex.bw?`<span style="color:var(--muted)">Bodyweight</span>`:''}
+            </div>
+          </div><div class="ex-status">${ad?'✓':ds>0?`${ds}/${ex.s}`:''}</div></div>
+          <div class="sets-row">`;
+          for(let i=0;i<ex.s;i++){const done=!!ch[`${si}-${ei}-${i}`];h+=`<button class="set-btn" onclick="togSet(${si},${ei},${i})" style="background:${done?'#c8f06022':'var(--card2)'};border-color:${done?'var(--accent)':'var(--border)'};color:${done?'var(--accent)':'var(--muted)'}"><div class="cb ${done?'done':''}">${done?chk('#000'):''}</div>Set ${i+1}</button>`;}
+          h+=`</div></div>`;
+        });
+      }
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+
+  }else if(ST.view==='progress'){
+    const allS=Array.from({length:16},(_,i)=>({w:i+1,...weekStats(i+1)}));
+    const started=allS.filter(s=>s.pct>0).length;
+    const avg=started>0?Math.round(allS.filter(s=>s.pct>0).reduce((a,s)=>a+s.pct,0)/started):0;
+    let streak=0;for(let w=ST.week;w>=1;w--){if(weekStats(w).pct>=50)streak++;else break;}
+    h+=`<div class="pad"><div class="stat-grid">
+      <div class="stat-card"><div class="stat-val">${started}</div><div class="stat-lbl">Weeks started</div></div>
+      <div class="stat-card"><div class="stat-val">${avg}%</div><div class="stat-lbl">Avg completion</div></div>
+      <div class="stat-card"><div class="stat-val">${streak}</div><div class="stat-lbl">Week streak</div></div>
+    </div><div class="phase-legend">`;
+    Object.entries(PC).forEach(([ph,col])=>{h+=`<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div class="legend-dot" style="background:${col}"></div>${ph}</div>`;});
+    h+=`</div><div class="chart-wrap"><h3>Week-by-week completion</h3><div class="bars">`;
+    allS.forEach(({w,pct,phase})=>{const col=PC[phase],cur=w===ST.week;h+=`<div class="bar-col" onclick="calSelDay(${w},${ST.dayIdx});setView('workout')"><div class="bar-inner"><div class="bar" style="height:${pct>0?Math.max(4,pct)+'%':'4%'};background:${pct>0?col:'var(--border)'};opacity:${cur?1:0.65};border:${cur?`1px solid ${col}`:'none'}"></div></div><div class="bar-lbl" style="color:${cur?col:'var(--muted)'};font-weight:${cur?700:400}">${w}</div></div>`;});
+    h+=`</div></div><div class="phase-section"><h3>Phase breakdown</h3>`;
+    [['Base','1–4','Foundation · aerobic base · technique'],['Volume','5–8','+1 set per lift · longer runs'],['Intensity','9–12','Heavier rep ranges · longer runs'],['Peak','13–15','Max volume & intensity'],['Deload','16','Reduced volume · full recovery']].forEach(([phase,ws,desc])=>{
+      const col=PC[phase],ps=allS.filter(s=>s.phase===phase),pavg=ps.length>0?Math.round(ps.reduce((a,s)=>a+s.pct,0)/ps.length):0;
+      h+=`<div class="phase-row"><div class="legend-dot" style="background:${col}"></div><div class="pbar-wrap"><div class="pbar-top"><span>${phase} <span style="color:var(--muted);font-weight:400">· W${ws}</span></span><span style="font-size:12px;color:${pavg>0?col:'var(--muted)'}">${pavg>0?pavg+'%':'—'}</span></div><div class="pbar-bg"><div class="pbar-fill" style="width:${pavg}%;background:${col}"></div></div><div class="pbar-desc">${desc}</div></div></div>`;
+    });
+    h+=`</div></div>`;
+
+  }else if(ST.view==='backup'){
+    h+=`<div class="pad">
+      <div class="bk-section"><h3>Google Sheets Sync</h3>
+        <p style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px">Two-way sync. Use the ↻ Sync button in the header to pull latest data from any device. Progress pushes automatically on every set.</p>
+        <div class="sh-label">Apps Script URL</div>
+        <input id="sh-url" type="url" value="${CFG.url}" placeholder="https://script.google.com/macros/s/..."/>
+        <div class="sh-label">Secret key</div>
+        <input id="sh-key" type="password" value="${CFG.key}" placeholder="Your secret key"/>
+        <button class="sh-save" onclick="saveSheets()">Save connection</button>
+        <div class="sync-row"><div class="sdot ${CFG.url?'on':''}"></div><span>${CFG.url?'Connected · auto-pushes on every set · tap ↻ Sync to pull':'Not connected'}</span></div>
+      </div>
+      <div class="bk-section"><h3>Rest timer</h3>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+          <button class="wt-btn" style="width:30px;height:30px;font-size:18px" onclick="chgRest(-15)">−</button>
+          <span id="rd" style="font-size:16px;font-weight:700;min-width:46px;text-align:center">${ST.restSecs}s</span>
+          <button class="wt-btn" style="width:30px;height:30px;font-size:18px" onclick="chgRest(15)">+</button>
+          <span style="font-size:12px;color:var(--muted)">between sets</span>
+        </div>
+      </div>
+      <div class="bk-section"><h3>Export / Import</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">Download a JSON backup of all progress and weights.</p>
+        <div class="bk-btns"><button class="bk-btn bk-green" onclick="expBk()">⬇ Export JSON</button><button class="bk-btn bk-neutral" onclick="impBk()">⬆ Import JSON</button></div>
+      </div>
+      <div class="bk-section"><h3>Reset</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">Wipe all progress and weights. Cannot be undone.</p>
+        <div class="bk-btns"><button class="bk-btn bk-red" onclick="doReset()">Reset all progress</button></div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);text-align:center;padding:8px 0">v2.0 · Two-way sync</div>
+    </div>`;
+  }
+
+  document.getElementById('app').innerHTML=h;
+  renderTimer();
+  renderSyncBtn();
+  if(ST.calOpen)renderCalDropdown();
+}
+
+// ── HANDLERS ────────────────────────────────────────────────
+window.setView=v=>{ST.view=v;ST.calOpen=false;render();};
+window.openCal=()=>{ST.calOpen=!ST.calOpen;if(ST.calOpen)ST.calDropWeek=ST.week;render();};
+window.closeCal=()=>{ST.calOpen=false;render();};
+window.calSelWeek=w=>{ST.calDropWeek=w;renderCalDropdown();};
+window.calSelDay=(w,di)=>{ST.week=w;ST.dayIdx=di;ST.calOpen=false;render();};
+
+window.togSet=(si,ei,idx)=>{
+  const key=`${si}-${ei}-${idx}`,ch={...getCh()};
+  ch[key]=!ch[key];setCh(ch);
+  if(ch[key])startTimer();else stopTimer();
+  render();
+  if(CFG.url)syncPush();
+};
+window.togRun=si=>{const key=`run-${si}`,ch={...getCh()};ch[key]=!ch[key];setCh(ch);render();if(CFG.url)syncPush();};
+window.adjWt=(name,week,delta,e)=>{e.stopPropagation();const cur=WTS[name]!==undefined?WTS[name]:(sugWt(name,week)||0);WTS[name]=Math.max(0,+(cur+delta).toFixed(2));sv();render();if(CFG.url)syncPush();};
+window.chgRest=d=>{ST.restSecs=Math.max(15,Math.min(300,ST.restSecs+d));const el=document.getElementById('rd');if(el)el.textContent=ST.restSecs+'s';};
+window.saveSheets=()=>{CFG.url=(document.getElementById('sh-url')?.value||'').trim();CFG.key=(document.getElementById('sh-key')?.value||'').trim();sv();render();};
+window.syncPull=syncPull;
+window.stopTimer=stopTimer;
+window.expBk=()=>{const b=new Blob([JSON.stringify({v:3,ts:new Date().toISOString(),progress:ST.progress,weights:WTS},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`training-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();};
+window.impBk=()=>{const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=e=>{const fr=new FileReader();fr.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(d.progress)ST.progress=d.progress;if(d.weights)WTS=d.weights;sv();render();}catch{alert('Invalid backup file.');}};fr.readAsText(e.target.files[0]);};inp.click();};
+window.doReset=()=>{if(confirm('Reset ALL progress and weights? This cannot be undone.')){ST.progress={};WTS={};sv();render();}};
+
+// close calendar on outside click
+document.addEventListener('click',e=>{
+  if(ST.calOpen&&!e.target.closest('.cal-btn')&&!e.target.closest('.cal-dropdown')){ST.calOpen=false;render();}
+});
+
+// ── INIT ────────────────────────────────────────────────────
+load();
+const todayMap=[6,0,1,2,3,4,5];
+ST.dayIdx=todayMap[new Date().getDay()]??0;
+render();
+</script>
+
+<!-- UPDATED APPS SCRIPT — paste this into Google Apps Script replacing previous version -->
+<!--
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    if (data.secret !== SECRET_KEY) return resp({error:"Unauthorized"});
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    
+    // Save progress to a hidden sheet as JSON
+    let store = ss.getSheetByName("_store");
+    if (!store) { store = ss.insertSheet("_store"); store.hideSheet(); }
+    store.clearContents();
+    store.getRange(1,1).setValue(JSON.stringify({progress: data.progress, weights: data.weights, ts: data.ts}));
+    
+    // Also write readable history log
+    let log = ss.getSheetByName("Sync Log");
+    if (!log) { log = ss.insertSheet("Sync Log"); log.appendRow(["Timestamp","Action"]); }
+    log.appendRow([new Date(data.ts), "push"]);
+    
+    return resp({success:true});
+  } catch(err) { return resp({error:err.toString()}); }
+}
+
+function doGet(e) {
+  try {
+    const secret = e.parameter.secret;
+    if (secret !== SECRET_KEY) return resp({error:"Unauthorized"});
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const store = ss.getSheetByName("_store");
+    if (!store) return resp({progress:{}, weights:{}});
+    const raw = store.getRange(1,1).getValue();
+    if (!raw) return resp({progress:{}, weights:{}});
+    const data = JSON.parse(raw);
+    return resp({progress: data.progress||{}, weights: data.weights||{}});
+  } catch(err) { return resp({error:err.toString()}); }
+}
+
+function resp(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+-->
+</body>
+</html>
 .bar-lbl{font-size:9px;margin-top:4px}
 .phase-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}

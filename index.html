@@ -154,7 +154,7 @@ const SK='tr_prog_v4',WK='tr_wts_v4',CK='tr_cfg_v4';
 // ── PROGRAM START DATE ────────────────────────────────────────
 // Set this to the Monday you started (or plan to start) Week 1
 // Format: new Date(YYYY, MM-1, DD)  e.g. May 5 2025 = new Date(2025,4,5)
-const PROGRAM_START = new Date(2025, 3, 14); // Apr 14 2025 — change to your actual start
+const PROGRAM_START = new Date(2026, 3, 14); // Apr 14 2026 — change to your actual start
 
 // ── BUILD WEEK DATA ───────────────────────────────────────────
 function bw(w){
@@ -486,7 +486,7 @@ function render(){
             <div class="ex-meta">
               <span>${ex.s} sets · ${ex.r}</span>
               ${ex.ss?`<span class="ss-tag">SS ${ex.ss}</span>`:''}
-              ${!ex.bw&&wt!==null?`<div class="wt-row"><button class="wt-btn" onclick="adjWt('${ex.n.replace(/'/g,"\\'")}',${ST.week},-2.5,event)">−</button><span class="wt-val">${wt} lbs</span><button class="wt-btn" onclick="adjWt('${ex.n.replace(/'/g,"\\'")}',${ST.week},2.5,event)">+</button></div>`:ex.bw?`<span style="color:var(--muted)">Bodyweight</span>`:''}
+              ${!ex.bw&&wt!==null?`<div class="wt-row"><button class="wt-btn" onclick="adjWt('${ex.n.replace(/'/g,"\\'")}',${ST.week},-2.5,event)">−</button><span class="wt-val">${wt} kg</span><button class="wt-btn" onclick="adjWt('${ex.n.replace(/'/g,"\\'")}',${ST.week},2.5,event)">+</button></div>`:ex.bw?`<span style="color:var(--muted)">Bodyweight</span>`:''}
             </div>
           </div><div class="ex-status">${ad?'✓':ds>0?`${ds}/${ex.s}`:''}</div></div>
           <div class="sets-row">`;

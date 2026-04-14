@@ -273,14 +273,14 @@ body.timer-on .date-sel-outer{top:0}
 .cal-ok-btn{padding:11px 24px;border-radius:12px;font-size:14px;font-weight:700;color:#0b0b0c;background:var(--accent);border:none}
 
 /* ── WORKOUT CONTENT ── */
-.session-card{background:linear-gradient(180deg,rgba(56,56,60,.48) 0%,rgba(28,28,30,.35) 100%);backdrop-filter:blur(18px) saturate(135%);border:1px solid var(--glass);border-radius:22px;margin-bottom:14px;overflow:hidden}
-.session-hdr{padding:14px 16px;border-bottom:1px solid #3a3a3d;display:flex;align-items:center;gap:10px}
+.session-card{margin-bottom:14px;overflow:hidden}
+.session-hdr{padding:14px 16px;display:flex;align-items:center;gap:10px}
 .session-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .session-info{flex:1}
 .session-info h3{font-size:clamp(1.05rem,3vw + 0.65rem,1.4rem);font-weight:700;letter-spacing:-.5px;line-height:1.15}
 .session-info p{font-size:13px;color:var(--muted);margin-top:5px}
-.ex-row{border-bottom:1px solid #3a3a3d}
-.ex-row:last-child{border-bottom:none}
+.ex-row{margin-bottom:8px}
+.ex-row:last-child{margin-bottom:0}
 .ex-hdr{padding:12px 16px 6px;display:flex;align-items:flex-start;gap:10px}
 .ex-name{font-size:18px;font-weight:600;transition:all .2s;letter-spacing:-.3px}
 .ex-meta{font-size:12px;color:var(--muted);margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -301,7 +301,7 @@ body.timer-on .date-sel-outer{top:0}
   color:var(--accent);
 }
 .wt-row{display:flex;align-items:center;gap:5px}
-.wt-btn{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.07);backdrop-filter:blur(10px);border:1px solid var(--glass);font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
+.wt-btn{width:24px;height:24px;border-radius:30px;background:rgba(255,255,255,.07);backdrop-filter:blur(10px);border:1px solid var(--glass);font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
 .wt-val{font-size:12px;font-weight:700;color:var(--accent);min-width:58px;text-align:center}
 .ex-status{font-size:13px;color:var(--accent);font-weight:700;white-space:nowrap;padding-top:2px}
 .sets-row{
@@ -674,15 +674,6 @@ function renderCalModal(){
   const tempDate=programToDate(ST.calTempWeek,ST.calTempDay);
   tempDate.setHours(0,0,0,0);
 
-  // week strip
-  let weekStrip=`<div class="cal-week-strip">`;
-  for(let w=1;w<=16;w++){
-    const comp=weekComp(w);
-    const isActive=w===ST.calTempWeek;
-    weekStrip+=`<button class="cal-wk-btn ${isActive?'active':comp>0?'has-progress':''}" onclick="calJumpWeek(${w})">W${w}</button>`;
-  }
-  weekStrip+=`</div>`;
-
   // selected label
   const selLabel=fmtDate(tempDate);
   const selDay=bw(ST.calTempWeek).days[ST.calTempDay];
@@ -695,7 +686,6 @@ function renderCalModal(){
     <div class="cal-modal-selected">${selLabel}</div>
     <div style="font-size:12px;color:var(--muted);margin-top:2px">W${ST.calTempWeek} · ${selDay.label}</div>
   </div>
-  ${weekStrip}
   <div class="cal-month-nav">
     <button class="cal-nav-arr" onclick="calNavMonth(-1)">‹</button>
     <div class="cal-month-label">${fmtMonthYear(mv)}</div>
@@ -955,13 +945,13 @@ function render(){
   h+=`<div class="btm-tabbar-wrap">
     <div class="btm-tabbar">
       <button class="btm-tab ${ST.view==='workout'?'active':''}" onclick="setView('workout')">
-        <span class="btm-tab-ico">●</span><span class="btm-tab-txt">Schedule</span>
+        <span class="btm-tab-txt">Schedule</span>
       </button>
       <button class="btm-tab ${ST.view==='progress'?'active':''}" onclick="setView('progress')">
-        <span class="btm-tab-ico">◐</span><span class="btm-tab-txt">Sessions</span>
+        <span class="btm-tab-txt">Sessions</span>
       </button>
       <button class="btm-tab ${ST.view==='backup'?'active':''}" onclick="setView('backup')">
-        <span class="btm-tab-ico">◌</span><span class="btm-tab-txt">Settings</span>
+        <span class="btm-tab-txt">Settings</span>
       </button>
     </div>
   </div>`;

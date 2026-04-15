@@ -878,9 +878,12 @@ window.doReset=()=>{if(confirm('Reset ALL data? This cannot be undone.')){ST.pro
     bar.classList.toggle('visible', offline);
     document.body.classList.toggle('offline', offline);
   }
-  window.addEventListener('online', update);
+  window.addEventListener('online', ()=>{ update(); syncPush(); });
   window.addEventListener('offline', update);
   update();
+
+  // Heartbeat: push every 5 minutes while online
+  setInterval(()=>{ if(navigator.onLine) syncPush(); }, 5*60*1000);
 })();
 
 // ── INIT ─────────────────────────────────────────────────────

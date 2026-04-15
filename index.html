@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Training</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -251,12 +250,24 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 /* ── NOTIFICATION BANNER ── */
 .notif-banner{margin-bottom:10px;padding:12px 14px;border-radius:14px;background:rgba(184,255,29,.1);border:1px solid rgba(184,255,29,.25);font-size:13px;line-height:1.4;display:flex;align-items:center;gap:10px}
 .notif-banner-icon{font-size:20px;flex-shrink:0}
+
+/* ── OFFLINE BANNER ── */
+.offline-bar{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;background:#1a1a1a;color:#f5f5f7;font-size:13px;font-weight:600;letter-spacing:.01em;transform:translateY(-100%);transition:transform .3s var(--ease-out)}
+.offline-bar.visible{transform:translateY(0)}
+body.offline .date-sel-outer{top:37px}
+
+/* ── PROGRESSION NUDGE ── */
+.prog-nudge{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px 14px;border-radius:16px;background:rgba(123,97,255,.07);border:1px solid rgba(123,97,255,.18);animation:popUp .3s var(--ease-out) both}
+.prog-nudge-icon{font-size:20px;flex-shrink:0}
+.prog-nudge-text{flex:1;font-size:12px;color:var(--muted);line-height:1.5}
+.prog-nudge-text strong{color:var(--accent);display:block;font-size:13px;margin-bottom:2px}
+.prog-nudge-dismiss{flex-shrink:0;font-size:18px;color:var(--muted-2);padding:2px 6px;border-radius:8px;cursor:pointer;background:none;border:none;line-height:1}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const SK='tr_prog_v5',WK='tr_wts_v5',CK='tr_cfg_v5',NK='tr_notes_v1',RLK='tr_runs_v1',PRK='tr_prs_v1',SWK='tr_swaps_v1';
+const SK='tr_prog_v5',WK='tr_wts_v5',CK='tr_cfg_v5',NK='tr_notes_v1',RLK='tr_runs_v1',PRK='tr_prs_v1',SWK='tr_swaps_v1',WPHK='tr_wphist_v1',DNK='tr_dismissed_v1';
 
 const PROGRAM_START = new Date(2026, 3, 14); // ← Change to your actual start Monday
 
@@ -323,7 +334,7 @@ function dateKey(d){return d.toISOString().split('T')[0];}
 // ── STATE ─────────────────────────────────────────────────────
 let ST={view:'workout',week:1,dayIdx:0,progress:{},restSecs:60,timerActive:false,timerLeft:60,calOpen:false,calViewMonth:null,calTempWeek:null,calTempDay:null,syncStatus:'idle',timerSound:true,timerHaptic:true,soundEffects:true,swapModal:null,summaryData:null,workoutStartTime:null,notifAsked:false};
 let WTS={},CFG={url:'',key:''},TI=null;
-let NOTES={},RUNLOG={},PRS={},SWAPPED={};
+let NOTES={},RUNLOG={},PRS={},SWAPPED={},WPHIST={},DISMISSED_NUDGES={};
 let lastTimerBeep=-1;
 
 function load(){
@@ -334,6 +345,8 @@ function load(){
   try{RUNLOG=JSON.parse(localStorage.getItem(RLK)||'{}');}catch{}
   try{PRS=JSON.parse(localStorage.getItem(PRK)||'{}');}catch{}
   try{SWAPPED=JSON.parse(localStorage.getItem(SWK)||'{}');}catch{}
+  try{WPHIST=JSON.parse(localStorage.getItem(WPHK)||'{}');}catch{}
+  try{DISMISSED_NUDGES=JSON.parse(localStorage.getItem(DNK)||'{}');}catch{}
 }
 function sv(){
   localStorage.setItem(SK,JSON.stringify(ST.progress));
@@ -343,6 +356,8 @@ function sv(){
   localStorage.setItem(RLK,JSON.stringify(RUNLOG));
   localStorage.setItem(PRK,JSON.stringify(PRS));
   localStorage.setItem(SWK,JSON.stringify(SWAPPED));
+  localStorage.setItem(WPHK,JSON.stringify(WPHIST));
+  localStorage.setItem(DNK,JSON.stringify(DISMISSED_NUDGES));
 }
 function getW(name,week){return WTS[name]!==undefined?WTS[name]:sugWt(name,week);}
 function getCh(){return ST.progress[`${ST.week}-${ST.dayIdx}`]||{};}
@@ -396,7 +411,61 @@ function getSessionPRs(w,di){
   return prs;
 }
 
-// ── SCHEDULE STATUS ───────────────────────────────────────────
+// ── PROGRESSION NUDGE ─────────────────────────────────────────
+// Records a fully-completed exercise performance entry
+function recordPerf(exName,weight,sets,reps,week,dayIdx){
+  if(!weight||weight<=0)return;
+  const dayId=`${week}-${dayIdx}`;
+  if(!WPHIST[exName])WPHIST[exName]=[];
+  // Avoid duplicate entries for the same day
+  const already=WPHIST[exName].some(e=>e.dayId===dayId&&e.weight===weight&&e.sets===sets);
+  if(!already){WPHIST[exName].push({dayId,weight,sets,reps,ts:Date.now()});}
+  sv();
+}
+
+// Returns nudge info if the athlete should progress, null otherwise
+// Trigger: same weight × sets completed on 3+ distinct days
+function getNudge(exName,weight,sets,reps){
+  if(!weight||weight<=0)return null;
+  const nudgeKey=`${exName}|${weight}|${sets}`;
+  if(DISMISSED_NUDGES[nudgeKey])return null;
+  const hist=WPHIST[exName]||[];
+  const matches=hist.filter(e=>e.weight===weight&&e.sets===sets);
+  const distinctDays=new Set(matches.map(e=>e.dayId)).size;
+  if(distinctDays<3)return null;
+  const step=PROG[exName]||2.5;
+  return{exName,weight,sets,reps,distinctDays,nextWeight:+(weight+step).toFixed(2),nudgeKey};
+}
+
+// Called when all sets of an exercise are ticked
+function checkExerciseComplete(exName,weight,sets,reps,week,dayIdx){
+  if(!weight||weight<=0)return;
+  recordPerf(exName,weight,sets,reps,week,dayIdx);
+}
+
+window.dismissNudge=(nudgeKey,e)=>{
+  e.stopPropagation();
+  DISMISSED_NUDGES[nudgeKey]=true;
+  sv();render();
+};
+
+// Gather all active nudges for summary modal
+function getActiveNudges(){
+  const nudges=[];
+  const seen=new Set();
+  Object.entries(WPHIST).forEach(([exName,entries])=>{
+    if(!entries.length)return;
+    // Group by weight+sets
+    const groups={};
+    entries.forEach(e=>{const k=`${e.weight}|${e.sets}`;if(!groups[k])groups[k]=[];groups[k].push(e);});
+    Object.entries(groups).forEach(([k,arr])=>{
+      const{weight,sets,reps}=arr[0];
+      const nudge=getNudge(exName,weight,sets,reps);
+      if(nudge&&!seen.has(nudge.nudgeKey)){seen.add(nudge.nudgeKey);nudges.push(nudge);}
+    });
+  });
+  return nudges;
+}
 function getDayScheduleStatus(week,dayIdx){
   const viewDate=new Date(programToDate(week,dayIdx));viewDate.setHours(0,0,0,0);
   const today=new Date();today.setHours(0,0,0,0);
@@ -494,7 +563,7 @@ function renderCalModal(){
 }
 
 // ── SYNC ──────────────────────────────────────────────────────
-async function syncPush(){if(!CFG.url||!CFG.key)return;try{await fetch(CFG.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'push',secret:CFG.key,ts:new Date().toISOString(),progress:ST.progress,weights:WTS,notes:NOTES,runlog:RUNLOG,prs:PRS})});}catch{}}
+async function syncPush(){if(!CFG.url||!CFG.key)return;try{await fetch(CFG.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'push',secret:CFG.key,ts:new Date().toISOString(),progress:ST.progress,weights:WTS,notes:NOTES,runlog:RUNLOG,prs:PRS,wphist:WPHIST,dismissedNudges:DISMISSED_NUDGES})});}catch{}}
 async function syncPull(){
   if(!CFG.url||!CFG.key){alert('Connect Google Sheets first in Settings.');return;}
   ST.syncStatus='syncing';renderSyncBtn();
@@ -507,6 +576,8 @@ async function syncPull(){
     if(data.notes)NOTES={...NOTES,...data.notes};
     if(data.runlog)RUNLOG={...RUNLOG,...data.runlog};
     if(data.prs)PRS={...PRS,...data.prs};
+    if(data.wphist){Object.keys(data.wphist).forEach(k=>{WPHIST[k]=[...new Map([...(WPHIST[k]||[]),...(data.wphist[k]||[])].map(e=>[e.dayId+e.weight+e.sets,e])).values()];});}
+    if(data.dismissedNudges)DISMISSED_NUDGES={...DISMISSED_NUDGES,...data.dismissedNudges};
     sv();ST.syncStatus='ok';renderSyncBtn();setTimeout(()=>{ST.syncStatus='idle';renderSyncBtn();},3000);render();
   }catch{ST.syncStatus='err';renderSyncBtn();setTimeout(()=>{ST.syncStatus='idle';renderSyncBtn();},4000);}
 }
@@ -594,7 +665,10 @@ function render(){
           </div>
           <div class="sets-row">`;
           for(let i=0;i<ex.s;i++){const done=!!ch[`${si}-${ei}-${i}`];h+=`<button type="button" class="set-btn" data-si="${si}" data-ei="${ei}" data-idx="${i}" style="background:${done?'transparent':'#F7F5F6'};border-color:${done?'#F7F5F6':'rgba(0,0,0,.08)'};color:${done?'#888888':'#15141E'}">Set ${i+1}<div class="cb ${done?'done':''}">${done?chk('#fff'):''}</div></button>`;}
-          h+=`</div></div>`;
+          h+=`</div>`;
+          // Progression nudge
+          if(!ex.bw&&wt){const nudge=getNudge(displayName,wt,ex.s,parseInt(ex.r)||10);if(nudge){const nk=nudge.nudgeKey.replace(/'/g,"\\'");h+=`<div class="prog-nudge"><div class="prog-nudge-icon">📈</div><div class="prog-nudge-text"><strong>Ready to progress?</strong>You've hit ${nudge.sets}×${parseInt(ex.r)||10} at ${nudge.weight} kg ${nudge.distinctDays} times — try <strong style="color:var(--accent)">${nudge.nextWeight} kg</strong> next time!</div><button class="prog-nudge-dismiss" onclick="dismissNudge('${nk}',event)" title="Dismiss">×</button></div>`;}}
+          h+=`</div>`;
         });
       }
       h+=`</div>`;
@@ -688,7 +762,7 @@ function render(){
       <div class="bk-section"><h3>Reset</h3>
         <div class="bk-btns"><button class="bk-btn bk-red" onclick="doReset()">Reset all progress</button></div>
       </div>
-      <div style="font-size:11px;color:var(--muted);text-align:center;padding:8px 0">v4.0 · PR tracker · Notes · Run log · Volume · Swap</div>
+      <div style="font-size:11px;color:var(--muted);text-align:center;padding:8px 0">v5.0 · PR tracker · Notes · Run log · Volume · Swap · Auto-progression</div>
     </div>`;
   }
 
@@ -718,6 +792,7 @@ function render(){
         <div class="summary-stat"><div class="summary-stat-val">${sd.vol>0?Math.round(sd.vol)+'kg':'—'}</div><div class="summary-stat-lbl">Volume</div></div>
       </div>
       ${sd.prs.length?`<div class="summary-prs"><div class="summary-prs-title">🏆 New Personal Records</div>${sd.prs.map(p=>`<div class="summary-pr-item">• ${p.name} — ${p.weight} kg</div>`).join('')}</div>`:''}
+      ${(()=>{const nudges=getActiveNudges();if(!nudges.length)return'';return`<div class="summary-prs" style="background:rgba(123,97,255,.07);border-color:rgba(123,97,255,.25)"><div class="summary-prs-title" style="color:var(--accent)">📈 Progression Ready</div>${nudges.map(n=>`<div class="summary-pr-item" style="color:#ccc">• ${n.exName} — try <strong style="color:var(--accent)">${n.nextWeight} kg</strong> (hit ${n.weight} kg × ${n.distinctDays} sessions)</div>`).join('')}</div>`;})()}
       <button class="summary-close" onclick="closeSummary()">Done</button>
     </div></div>`;
   }
@@ -759,6 +834,13 @@ window.togSet=(si,ei,idx)=>{
   const prev=!!ch[key];ch[key]=!ch[key];setCh(ch);
   if(ch[key]&&!prev)startTimer();else if(!ch[key])stopTimer();
   if(ch[key]){const ex=bw(ST.week).days[ST.dayIdx].sessions[si]?.exercises?.[ei];if(ex&&!ex.bw){const wt=getW(ex.n,ST.week);if(wt)checkAndSetPR(ex.n,wt);}}
+  // Check if all sets for this exercise are now complete → record performance
+  const ex=bw(ST.week).days[ST.dayIdx].sessions[si]?.exercises?.[ei];
+  if(ex&&!ex.bw&&ch[key]){
+    const wt=getW(ex.n,ST.week);
+    const allDone=Array.from({length:ex.s},(_,i)=>!!ch[`${si}-${ei}-${i}`]).every(Boolean);
+    if(allDone&&wt)checkExerciseComplete(ex.n,wt,ex.s,parseInt(ex.r)||10,ST.week,ST.dayIdx);
+  }
   render();checkShowSummary();
   if(CFG.url)syncPush();
 };
@@ -780,9 +862,26 @@ window.closeSummary=()=>{ST.summaryData=null;ST.workoutStartTime=null;render();}
 window.requestNotifPermission=requestNotifPermission;
 window.scheduleWorkoutReminder=scheduleWorkoutReminder;
 
-window.expBk=()=>{const b=new Blob([JSON.stringify({v:5,ts:new Date().toISOString(),progress:ST.progress,weights:WTS,notes:NOTES,runlog:RUNLOG,prs:PRS},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`training-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();};
-window.impBk=()=>{const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=e=>{const fr=new FileReader();fr.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(d.progress)ST.progress=d.progress;if(d.weights)WTS=d.weights;if(d.notes)NOTES=d.notes;if(d.runlog)RUNLOG=d.runlog;if(d.prs)PRS=d.prs;sv();render();}catch{alert('Invalid backup file.');}};fr.readAsText(e.target.files[0]);};inp.click();};
-window.doReset=()=>{if(confirm('Reset ALL data? This cannot be undone.')){ST.progress={};WTS={};NOTES={};RUNLOG={};PRS={};SWAPPED={};sv();render();}};
+window.expBk=()=>{const b=new Blob([JSON.stringify({v:6,ts:new Date().toISOString(),progress:ST.progress,weights:WTS,notes:NOTES,runlog:RUNLOG,prs:PRS,wphist:WPHIST,dismissedNudges:DISMISSED_NUDGES},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`training-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();};
+window.impBk=()=>{const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=e=>{const fr=new FileReader();fr.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(d.progress)ST.progress=d.progress;if(d.weights)WTS=d.weights;if(d.notes)NOTES=d.notes;if(d.runlog)RUNLOG=d.runlog;if(d.prs)PRS=d.prs;if(d.wphist)WPHIST=d.wphist;if(d.dismissedNudges)DISMISSED_NUDGES=d.dismissedNudges;sv();render();}catch{alert('Invalid backup file.');}};fr.readAsText(e.target.files[0]);};inp.click();};
+window.doReset=()=>{if(confirm('Reset ALL data? This cannot be undone.')){ST.progress={};WTS={};NOTES={};RUNLOG={};PRS={};SWAPPED={};WPHIST={};DISMISSED_NUDGES={};sv();render();}};
+
+// ── OFFLINE INDICATOR ────────────────────────────────────────
+(function(){
+  const bar=document.createElement('div');
+  bar.className='offline-bar';
+  bar.innerHTML='<div class="offline-dot"></div>Offline — changes saved locally, will sync when back online';
+  document.body.appendChild(bar);
+
+  function update(){
+    const offline=!navigator.onLine;
+    bar.classList.toggle('visible', offline);
+    document.body.classList.toggle('offline', offline);
+  }
+  window.addEventListener('online', update);
+  window.addEventListener('offline', update);
+  update();
+})();
 
 // ── INIT ─────────────────────────────────────────────────────
 load();

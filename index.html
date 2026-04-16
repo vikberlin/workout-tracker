@@ -35,7 +35,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.7}
 .spin{display:inline-block;animation:spin .8s linear infinite}
 
 /* ── TIMER SHEET ── */
-.timer-sheet{position:fixed;left:0;right:0;bottom:0;z-index:400;padding:16px 18px calc(80px + env(safe-area-inset-bottom,0px));background:rgba(15,15,30,0.97);backdrop-filter:blur(24px) saturate(140%);border-top:1px solid var(--border);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform var(--dur-fast) var(--ease-out)}
+.timer-sheet{position:fixed;left:0;right:0;bottom:0;z-index:400;padding:16px 18px calc(80px + env(safe-area-inset-bottom,0px));background:rgba(69, 69, 69, 0.97);backdrop-filter:blur(24px) saturate(140%);border-top:1px solid var(--border);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform var(--dur-fast) var(--ease-out)}
 body.timer-on .timer-sheet{transform:translateY(0)}
 .timer-sheet-inner{display:flex;flex-direction:column;gap:12px}
 .timer-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -48,13 +48,13 @@ body.timer-on .timer-sheet{transform:translateY(0)}
 .nav-btn.active{color:#000;background:var(--accent)}
 
 /* ── PAD ── */
-.pad{padding:24px 20px calc(120px + env(safe-area-inset-bottom,0px))}
+.pad{padding:24px 20px calc(30px + env(safe-area-inset-bottom,0px))}
 body.workout-view .pad{padding-top:20px}
-body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
+body.workout-view.timer-on{padding-bottom:30px)}
 
 /* ── DATE SELECTOR STRIP ── */
 .date-sel-outer{top:0;left:0;right:0;z-index:220;display:flex;flex-direction:row;align-items:stretch;width:100%;background:transparent}
-.date-sel-btn{flex:1;min-width:0;position:relative;display:flex;align-items:center;justify-content:space-between;background:rgba(255, 255, 255, 0.158);backdrop-filter:blur(10px) saturate(140%);border:1;border-radius:999px;padding:32px 32px;text-align:left;}
+.date-sel-btn{flex:1;min-width:0;position:relative;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.158);backdrop-filter:blur(10px) saturate(140%);border:0;border-radius:999px;padding:32px 32px;text-align:left}
 .date-today-btn{display:inline-flex;padding:6px 20px;justify-content:center;align-items:center;gap:4px;border-radius:999px;background:rgba(255,230,0,0.18);backdrop-filter:blur(10px) saturate(140%);border:0;border-bottom:1px dashed var(--border);font-size:15px;font-weight:700;color:var(--accent-yellow);cursor:pointer}
 .date-sel-main{font-size:30px;font-weight:500;color:#FFFFFF;letter-spacing:-.35px}
 .date-sel-meta{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
@@ -62,57 +62,35 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 .date-sel-status{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 16px;gap:12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.02em;min-width:0}
 .date-sel-status.done{background:rgba(0,255,127,0.15);color:var(--accent);border:1px solid rgba(0,255,127,0.35)}
 .date-sel-status.missed{background:rgba(255,74,110,0.18);color:#ff6b88;border:1px solid rgba(255,74,110,0.35)}
+.date-sel-status.almost{background:rgba(255,165,0,0.15);color:#ffb347;border:1px solid rgba(255,165,0,0.35)}
 .date-sel-status.today{background:rgba(255,255,255,0.12);color:#FFFFFF;border:1px solid rgba(255,255,255,0.25)}
 .date-sel-status.upcoming{background:rgba(255,255,255,0.08);color:var(--muted);border:1px solid var(--border)}
 .date-sel-status.edge{background:rgba(255,230,0,0.15);color:var(--accent-yellow);border:1px solid rgba(255,230,0,0.35)}
 
 /* ── SESSION & EXERCISE ── */
 .session-card{margin-bottom:18px;overflow:hidden}
-.session-hdr{background:; padding:16px 0px;display:flex;align-items:center;gap:16px; border-radius:32px}
+.session-hdr{background:;padding:16px 0px;display:flex;align-items:center;gap:16px;border-radius:32px}
 .session-icon{width:60px;height:80px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .session-info{flex:1}
 .session-info h3{font-size:28px;font-weight:400;letter-spacing:-.35px;line-height:1.15;color:#FFFFFF}
-.session-info p{font-size:16px;font-weight:400;color:var(--muted);margin-top:6px; line-height:1.3}
-.ex-row{background:none;border-bottom:1px dashed var(--border);border-radius:0;margin-bottom:14px;padding: 0;overflow:hidden}
-.ex-hdr{ display:flex;align-items:flex-start;justify-content:space-between;gap:0px;margin-bottom:14px; border-radius:24px }
-.ex-name{padding: 20px 16px 0;font-size:24px;font-weight:500;color:#FFFFFF;letter-spacing:-.35px;line-height:1.2}
+.session-info p{font-size:16px;font-weight:400;color:var(--muted);margin-top:6px;line-height:1.3}
+.ex-row{background:none;border-bottom:1px dashed var(--border);border-radius:0;margin-bottom:14px;padding:0;overflow:hidden}
+.ex-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:0px;margin-bottom:14px;border-radius:24px}
+.ex-name{padding:20px 16px 0;font-size:24px;font-weight:500;color:#FFFFFF;letter-spacing:-.35px;line-height:1.2}
 .ex-meta{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-top:4px}
-.meta-chip{display:inline-flex;height:32px;padding: 16px;border:0px solid var(--border);justify-content:center;align-items:center;gap:8px;border: radius 0;px;background:rgba(255, 255, 255, 0);color:var(--muted);font-size:14px;font-weight:600;letter-spacing:.02em}
-.meta-chip.weight{background:rgb(50, 101, 255);border:1px solid );color:#fff; border-radius:999px}
-.meta-chip.pr{background:;border-color:rgba(255,230,0,0.25);color:var(--accent-yellow)}
+.meta-chip{display:inline-flex;height:32px;padding:16px;border:0px solid var(--border);justify-content:center;align-items:center;gap:8px;background:rgba(255,255,255,0);color:var(--muted);font-size:14px;font-weight:600;letter-spacing:.02em}
+.meta-chip.weight{background:rgb(50,101,255);border:1px solid transparent;color:#fff;border-radius:999px}
+.meta-chip.pr{border-color:rgba(255,230,0,0.25);color:var(--accent-yellow)}
 .wt-row{display:flex;align-items:center;gap:0}
-.wt-btn{width:32px;height:32px;border-radius:0;background:rgba(50, 101, 255, 0);border:0px solid rgba(0,255,127,0.20);font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#FFFFFF;cursor:pointer;transition:background var(--dur-fast)}
+.wt-btn{width:32px;height:32px;border-radius:0;background:rgba(50,101,255,0);border:0;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#FFFFFF;cursor:pointer;transition:background var(--dur-fast)}
 .wt-btn:hover{background:rgba(0,255,127,0.18)}
 .wt-row .wt-btn:first-child{border-radius:999px 0 0 999px}
 .wt-row .wt-btn:last-child{border-radius:0 999px 999px 0}
 .ex-status{font-size:14px;font-weight:700;color:var(--accent);margin-left:auto;flex-shrink:0}
 .wt-val{font-size:14px;font-weight:600;color:var(--accent);min-width:58px;text-align:center}
 .sets-row{display:flex;flex-direction:column;gap:8px;width:100%;margin-top:8px}
-.set-btn{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  width:100%;
-  min-height:66px;
-  padding:16px 18px;
-  border-radius:20px;
-  font-size:16px;
-  font-weight:400;
-  border:1px solid rgba(255, 255, 255, 0.273);
-  background: #000;
-  color:#FFFFFF;
-  transition:background var(--dur-fast) var(--ease-out),
-             border-color var(--dur-fast) var(--ease-out),
-             transform var(--dur-fast);
-  cursor:pointer;
-  touch-action:pan-y;
-}
-.set-btn.is-done {
-  background: #f3f4ff23;
-  border-color: #726E72;
-  color: #726E72;
-}
+.set-btn{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:66px;padding:16px 18px;border-radius:20px;font-size:16px;font-weight:400;border:1px solid rgba(255,255,255,0.273);background:#000;color:#FFFFFF;transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast);cursor:pointer;touch-action:pan-y}
+.set-btn.is-done{background:#f3f4ff23;border-color:#726E72;color:#726E72}
 .set-btn:hover{background:rgba(255,255,255,0.10)}
 .set-btn.set-pop{transform:scale(0.98)}
 .cb{width:24px;height:24px;border-radius:999px;border:1px solid rgba(255,255,255,0.40);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -122,7 +100,7 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 
 /* ── RUN LOG ENTRY ── */
 .run-log-form{margin:0 0 14px;background:rgba(255,255,255,0.06);border-radius:20px;border:1px solid var(--border);padding:16px 18px}
-.run-log-title{font-size:16px;font-weight:500;color:#fff;letter-spacing:;margin-bottom:12px}
+.run-log-title{font-size:16px;font-weight:500;color:#fff;margin-bottom:12px}
 .run-log-fields{display:flex;gap:12px;flex-wrap:wrap}
 .run-log-field{display:flex;flex-direction:column;gap:12px;flex:1;min-width:90px}
 .run-log-field label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
@@ -132,7 +110,7 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 .swap-modal-overlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center}
 .swap-modal{width:100%;max-width:430px;background:#000000;backdrop-filter:blur(24px);border-radius:24px 24px 0 0;padding:0 0 env(safe-area-inset-bottom,20px);border-top:1px solid var(--border);max-height:70vh;overflow-y:auto}
 .swap-modal-hdr{padding:16px 20px 12px;border-bottom:1px dashed var(--border);position:sticky;top:0;background:#000000;backdrop-filter:blur(12px)}
-.swap-modal-hdr h3{font-size:17px;font-weight:700;color:#FFFFFF} 
+.swap-modal-hdr h3{font-size:17px;font-weight:700;color:#FFFFFF}
 .swap-modal-hdr p{font-size:12px;color:var(--muted);margin-top:3px}
 .swap-item{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px dashed var(--border);cursor:pointer;transition:background .15s}
 .swap-item:hover{background:rgba(255,255,255,0.06)}
@@ -160,9 +138,9 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 .pr-flash{display:inline-flex;align-items:center;gap:3px;background:rgba(255,230,0,0.18);border:1px solid rgba(255,230,0,0.40);border-radius:999px;padding:10px;font-size:10px;font-weight:800;color:var(--accent-yellow);margin-left:6px;letter-spacing:.5px;vertical-align:middle}
 
 /* ── NOTES ── */
-.notes-block{margin:0 0 12px;padding:16px 16px;b:rgba(255,255,255,0.12);border-radius:20px;border:1px solid var(--border)}
+.notes-block{margin:0 0 12px;padding:16px 16px;border-radius:20px;border:1px solid var(--border)}
 .notes-block textarea{margin-top:6px;font-size:16px;line-height:1.5;background:rgba(255,255,255,0.05);border-color:var(--border)}
-.notes-label{padding:0 0 8px 0px; font-size:15px;font-weight:400;color:var(--muted)}
+.notes-label{padding:0 0 8px 0;font-size:15px;font-weight:400;color:var(--muted)}
 
 /* ── VOLUME CHART ── */
 .vol-chart-wrap{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;padding:18px;margin-bottom:18px}
@@ -208,7 +186,7 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 .sdot.on{background:var(--accent)}
 
 /* ── CAL MODAL ── */
-.cal-modal-overlay{position:fixed;inset:0;z-index:500;background:rgb(0, 0, 0);display:flex;align-items:flex-end;justify-content:center}
+.cal-modal-overlay{position:fixed;inset:0;z-index:500;background:rgb(0,0,0);display:flex;align-items:flex-end;justify-content:center}
 .cal-modal{width:100%;max-width:430px;background:#000000;border-radius:24px 24px 0 0;padding:0 0 env(safe-area-inset-bottom,16px);border-top:1px solid var(--border)}
 .cal-modal-hdr{padding:16px 20px 12px;border-bottom:1px dashed var(--border)}
 .cal-modal-title{font-size:19px;color:var(--muted);font-weight:600}
@@ -232,12 +210,12 @@ body.workout-view.timer-on{padding-bottom:min(44vh,300px)}
 
 /* ── BOTTOM TAB BAR ── */
 .btm-tabbar-wrap{position:fixed;left:0;right:0;bottom:0;z-index:320;display:flex;justify-content:center;pointer-events:none;padding:0 18px calc(env(safe-area-inset-bottom,0px) + 16px)}
-.btm-tabbar{width:100%;max-width:520px;padding:6px;display:flex;gap:10px;pointer-events:auto;border-radius:999px;background:rgba(255, 255, 255, 0.158);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.25);box-shadow:inset 0 1px 1px rgba(255, 255, 255, 0.617),0 10px 30px rgba(0,0,0,0.25)}
+.btm-tabbar{width:100%;max-width:520px;padding:6px;display:flex;gap:10px;pointer-events:auto;border-radius:999px;background:rgba(255,255,255,0.158);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.25);box-shadow:inset 0 1px 1px rgba(255,255,255,0.617),0 10px 30px rgba(0,0,0,0.25)}
 .btm-tab{flex:1;min-height:58px;border-radius:999px;color:rgba(255,255,255,0.55);display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;font-size:15px;font-weight:700;transition:transform var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
 .btm-tab:hover{transform:translateY(-1px)}
 .btm-tab-ico{font-size:18px;line-height:1}
-.btm-tab-txt{font: size 18px;px;letter-spacing:.02em}
-.btm-tab.active{background:rgb(0, 0, 0);color:#FFFFFF}
+.btm-tab-txt{letter-spacing:.02em}
+.btm-tab.active{background:rgb(0,0,0);color:#FFFFFF}
 
 /* ── NOTIFICATION BANNER ── */
 .notif-banner{margin-bottom:10px;padding:12px 14px;border-radius:20px;background:rgba(0,255,127,0.10);border:1px solid rgba(0,255,127,0.25);font-size:13px;line-height:1.4;display:flex;align-items:center;gap:10px;color:#FFFFFF}
@@ -254,6 +232,42 @@ body.offline .date-sel-outer{top:37px}
 .prog-nudge-text{flex:1;font-size:12px;color:var(--muted);line-height:1.5}
 .prog-nudge-text strong{color:var(--accent);display:block;font-size:13px;margin-bottom:2px}
 .prog-nudge-dismiss{flex-shrink:0;font-size:18px;color:var(--muted-2);padding:2px 6px;border-radius:8px;cursor:pointer;background:none;border:none;line-height:1}
+
+/* ── ELAPSED BADGE ── */
+.elapsed-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent);padding:5px 12px;background:rgba(59,102,255,0.12);border:1px solid rgba(59,102,255,0.3);border-radius:999px;margin-top:6px}
+.elapsed-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+
+/* ── COMPLETE WORKOUT BUTTON ── */
+.cw-btn{margin-bottom:120px;margin-left:16px;margin-right:16px;width:calc(100% - 32px);padding:18px 28px;border-radius:999px;background:linear-gradient(135deg,#3B66FF,#6644ff);border:none;color:#fff;font-size:20px;font-weight:500;letter-spacing:-.01em;box-shadow:0 8px 32px rgba(59,102,255,0.35);display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out)}
+.cw-btn:active{transform:scale(0.97);box-shadow:0 4px 16px rgba(59,102,255,0.2)}
+
+/* ── CONFIRM MODAL ── */
+.confirm-overlay{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.82);display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .18s ease both}
+.confirm-modal{width:100%;max-width:430px;background:#111118;border-radius:28px 28px 0 0;padding:28px 22px calc(env(safe-area-inset-bottom,0px) + 24px);border-top:1px solid rgba(255,255,255,0.12);animation:popUp .22s var(--ease-out) both}
+.confirm-modal-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-.03em}
+.confirm-modal-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.55}
+.confirm-yes{width:100%;padding:18px;border-radius:999px;background:linear-gradient(135deg,#3B66FF,#6644ff);border:none;color:#fff;font-size:17px;font-weight:800;cursor:pointer;margin-bottom:10px;letter-spacing:-.01em}
+.confirm-no{width:100%;padding:15px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid var(--border);color:rgba(255,255,255,0.7);font-size:16px;font-weight:600;cursor:pointer}
+
+/* ── SUCCESS SCREEN ── */
+@keyframes floatDot{0%{transform:rotate(var(--sa)) translateX(var(--r)) rotate(calc(-1*var(--sa)))}100%{transform:rotate(calc(var(--sa) + 360deg)) translateX(var(--r)) rotate(calc(-360deg - var(--sa)))}}
+.success-screen{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;overflow:hidden;animation:fadeIn .35s ease both}
+.success-bg{position:absolute;inset:0;background:linear-gradient(180deg,#050508 0%,#08081a 38%,#0d1045 62%,#1a1a80 78%,#2233cc 90%,#3B66FF 100%)}
+.success-particles{position:absolute;top:12%;left:50%;transform:translateX(-50%);width:280px;height:280px;pointer-events:none}
+.sp{position:absolute;border-radius:50%;background:#3B66FF;top:50%;left:50%;animation:floatDot var(--d) linear infinite var(--dl)}
+.success-body{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:32px 28px 20px}
+.success-tag{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);font-size:12px;font-weight:700;color:rgba(255,255,255,0.65);letter-spacing:.06em;text-transform:uppercase;margin-bottom:22px;width:fit-content}
+.success-h1{font-size:clamp(3.8rem,17vw,6rem);font-weight:900;color:#fff;letter-spacing:-.05em;line-height:.92;margin-bottom:2px}
+.success-h2{font-size:clamp(2.4rem,11vw,4rem);font-weight:900;color:#3B66FF;letter-spacing:-.04em;line-height:1;margin-bottom:22px}
+.success-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.success-pill{padding:9px 18px;border-radius:999px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);font-size:13px;font-weight:700;color:#fff}
+.success-desc{font-size:15px;color:rgba(255,255,255,0.50);line-height:1.55;max-width:300px}
+.success-bar{position:relative;z-index:2;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 14px);background:rgba(255,255,255,0.07);backdrop-filter:blur(20px) saturate(140%);border-top:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;gap:10px}
+.success-icon-btn{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;transition:transform var(--dur-fast)}
+.success-icon-btn:active{transform:scale(0.94)}
+.success-done-btn{flex:1;min-height:56px;padding:0 24px;border-radius:999px;background:rgba(255,255,255,0.13);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.22);color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:transform var(--dur-fast),background var(--dur-fast)}
+.success-done-btn:active{transform:scale(0.97)}
 </style>
 </head>
 <body>
@@ -261,7 +275,7 @@ body.offline .date-sel-outer{top:37px}
 <script>
 const SK='tr_prog_v5',WK='tr_wts_v5',CK='tr_cfg_v5',NK='tr_notes_v1',RLK='tr_runs_v1',PRK='tr_prs_v1',SWK='tr_swaps_v1',WPHK='tr_wphist_v1',DNK='tr_dismissed_v1';
 
-const PROGRAM_START = new Date(2026, 3, 14); // ← Change to your actual start Monday
+const PROGRAM_START = new Date(2026, 3, 14);
 
 // ── EXERCISE SWAPS ────────────────────────────────────────────
 const SWAPS = {
@@ -324,7 +338,7 @@ function todayKey(){return new Date().toISOString().split('T')[0];}
 function dateKey(d){return d.toISOString().split('T')[0];}
 
 // ── STATE ─────────────────────────────────────────────────────
-let ST={view:'workout',week:1,dayIdx:0,progress:{},restSecs:60,timerActive:false,timerLeft:60,calOpen:false,calViewMonth:null,calTempWeek:null,calTempDay:null,syncStatus:'idle',timerSound:true,timerHaptic:true,soundEffects:true,swapModal:null,summaryData:null,workoutStartTime:null,notifAsked:false};
+let ST={view:'workout',week:1,dayIdx:0,progress:{},restSecs:60,timerActive:false,timerLeft:60,calOpen:false,calViewMonth:null,calTempWeek:null,calTempDay:null,syncStatus:'idle',timerSound:true,timerHaptic:true,soundEffects:true,swapModal:null,summaryData:null,confirmOpen:false,successData:null,workoutStartTime:null,notifAsked:false};
 let WTS={},CFG={url:'',key:''},TI=null;
 let NOTES={},RUNLOG={},PRS={},SWAPPED={},WPHIST={},DISMISSED_NUDGES={};
 let lastTimerBeep=-1;
@@ -390,33 +404,16 @@ function checkAndSetPR(name,weight){
   if(weight>cur){PRS[name]=weight;sv();return true;}
   return false;
 }
-function getSessionPRs(w,di){
-  const prs=[];const ch=ST.progress[`${w}-${di}`]||{};
-  bw(w).days[di].sessions.forEach((s,si)=>{
-    if(!s.exercises)return;
-    s.exercises.forEach((ex)=>{
-      if(ex.bw)return;
-      const wt=WTS[ex.n]!==undefined?WTS[ex.n]:(sugWt(ex.n,w)||0);
-      if(wt&&wt>(PRS[ex.n]||0))prs.push({name:ex.n,weight:wt});
-    });
-  });
-  return prs;
-}
 
 // ── PROGRESSION NUDGE ─────────────────────────────────────────
-// Records a fully-completed exercise performance entry
 function recordPerf(exName,weight,sets,reps,week,dayIdx){
   if(!weight||weight<=0)return;
   const dayId=`${week}-${dayIdx}`;
   if(!WPHIST[exName])WPHIST[exName]=[];
-  // Avoid duplicate entries for the same day
   const already=WPHIST[exName].some(e=>e.dayId===dayId&&e.weight===weight&&e.sets===sets);
   if(!already){WPHIST[exName].push({dayId,weight,sets,reps,ts:Date.now()});}
   sv();
 }
-
-// Returns nudge info if the athlete should progress, null otherwise
-// Trigger: same weight × sets completed on 3+ distinct days
 function getNudge(exName,weight,sets,reps){
   if(!weight||weight<=0)return null;
   const nudgeKey=`${exName}|${weight}|${sets}`;
@@ -428,26 +425,19 @@ function getNudge(exName,weight,sets,reps){
   const step=PROG[exName]||2.5;
   return{exName,weight,sets,reps,distinctDays,nextWeight:+(weight+step).toFixed(2),nudgeKey};
 }
-
-// Called when all sets of an exercise are ticked
 function checkExerciseComplete(exName,weight,sets,reps,week,dayIdx){
   if(!weight||weight<=0)return;
   recordPerf(exName,weight,sets,reps,week,dayIdx);
 }
-
 window.dismissNudge=(nudgeKey,e)=>{
   e.stopPropagation();
   DISMISSED_NUDGES[nudgeKey]=true;
   sv();render();
 };
-
-// Gather all active nudges for summary modal
 function getActiveNudges(){
-  const nudges=[];
-  const seen=new Set();
+  const nudges=[];const seen=new Set();
   Object.entries(WPHIST).forEach(([exName,entries])=>{
     if(!entries.length)return;
-    // Group by weight+sets
     const groups={};
     entries.forEach(e=>{const k=`${e.weight}|${e.sets}`;if(!groups[k])groups[k]=[];groups[k].push(e);});
     Object.entries(groups).forEach(([k,arr])=>{
@@ -458,6 +448,7 @@ function getActiveNudges(){
   });
   return nudges;
 }
+
 function getDayScheduleStatus(week,dayIdx){
   const viewDate=new Date(programToDate(week,dayIdx));viewDate.setHours(0,0,0,0);
   const today=new Date();today.setHours(0,0,0,0);
@@ -465,7 +456,11 @@ function getDayScheduleStatus(week,dayIdx){
   if(!inP)return{cls:'edge',label:'Outside program'};
   const comp=dayComp(week,dayIdx);
   const diff=(viewDate-today)/86400000;
-  if(diff<0){if(comp>=100)return{cls:'done',label:'Done'};return{cls:'missed',label:'Missed'};}
+  if(diff<0){
+    if(comp>=100)return{cls:'done',label:'Done'};
+    if(comp>0)return{cls:'almost',label:'Almost complete'};
+    return{cls:'missed',label:'Missed'};
+  }
   if(diff===0){if(comp>=100)return{cls:'done',label:'Today · done'};return{cls:'today',label:'Today'};}
   return{cls:'upcoming',label:'Upcoming'};
 }
@@ -478,6 +473,7 @@ function playSfx(type='click'){if(!ST.soundEffects)return;try{const C=window.Aud
 window.addEventListener('DOMContentLoaded',()=>{document.body.addEventListener('click',e=>{const target=e.target.closest('button, .set-btn, .wt-btn, .btm-tab, .sync-btn, .bk-btn, .cal-nav-arr, .cal-ok-btn, .cal-cancel-btn, .date-today-btn, .date-sel-btn, .run-check-wrap, .swap-item');if(target)playSfx('click');});});
 function startTimer(){
   if(!ST.workoutStartTime)ST.workoutStartTime=Date.now();
+  startElapsedTick();
   clearInterval(TI);ST.timerLeft=ST.restSecs;ST.timerActive=true;lastTimerBeep=-1;
   TI=setInterval(()=>{ST.timerLeft--;if(ST.timerLeft<=3&&ST.timerLeft>0&&ST.timerLeft!==lastTimerBeep){lastTimerBeep=ST.timerLeft;playBeep();if(ST.timerHaptic)try{navigator.vibrate(6);}catch{}}if(ST.timerLeft<=0){clearInterval(TI);ST.timerActive=false;}renderTimer();},1000);renderTimer();
 }
@@ -485,7 +481,6 @@ function stopTimer(){clearInterval(TI);ST.timerActive=false;ST.timerLeft=ST.rest
 function renderTimer(){
   const sheet=document.getElementById('timer-sheet');if(!sheet)return;
   if(!ST.timerActive){sheet.style.display='none';document.body.classList.remove('timer-on');return;}
-  const hot=ST.timerLeft<=10,col=hot?'#ff4a6e':'#b8ff1d';
   document.body.classList.add('timer-on');
   sheet.style.display='block';
   sheet.innerHTML=`<div class="timer-sheet-inner">
@@ -498,28 +493,49 @@ function renderTimer(){
 }
 function chk(c){return `<svg class="chk-svg" width="9" height="8" viewBox="0 0 9 8"><polyline points="1,4 3.5,6.5 8,1" stroke="${c}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
 
+// ── ELAPSED TICKER ────────────────────────────────────────────
+let ELTICK=null;
+function startElapsedTick(){
+  if(ELTICK)return;
+  ELTICK=setInterval(()=>{
+    const el=document.getElementById('workout-elapsed');
+    if(el&&ST.workoutStartTime){
+      const secs=Math.floor((Date.now()-ST.workoutStartTime)/1000);
+      el.textContent=`${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;
+    }
+  },1000);
+}
+function stopElapsedTick(){if(ELTICK){clearInterval(ELTICK);ELTICK=null;}}
+function fmtElapsed(){
+  if(!ST.workoutStartTime)return'0:00';
+  const secs=Math.floor((Date.now()-ST.workoutStartTime)/1000);
+  return`${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;
+}
+
+// ── PARTICLES ─────────────────────────────────────────────────
+function genParticles(){
+  const rings=[{n:7,r:50,sz:14},{n:11,r:95,sz:9},{n:14,r:132,sz:6},{n:5,r:25,sz:5}];
+  let h='';
+  rings.forEach(ring=>{
+    for(let i=0;i<ring.n;i++){
+      const sa=((i/ring.n)*360).toFixed(1);
+      const dur=(5+Math.random()*5).toFixed(1);
+      const dl=(-(Math.random()*parseFloat(dur))).toFixed(1);
+      const op=(0.35+Math.random()*0.65).toFixed(2);
+      const m=-(ring.sz/2).toFixed(1);
+      h+=`<div class="sp" style="--sa:${sa}deg;--r:${ring.r}px;--d:${dur}s;--dl:${dl}s;width:${ring.sz}px;height:${ring.sz}px;margin:${m}px 0 0 ${m}px;opacity:${op}"></div>`;
+    }
+  });
+  return h;
+}
+
 // ── NOTIFICATIONS ─────────────────────────────────────────────
 function requestNotifPermission(){if('Notification' in window&&Notification.permission==='default'){Notification.requestPermission();}}
 function scheduleWorkoutReminder(){
   if(!('Notification' in window)||Notification.permission!=='granted')return;
-  // We just show a notification now if today has no progress (called from settings)
   const tp=dateToProgram(new Date());if(!tp)return;
   const comp=dayComp(tp.week,tp.dayIdx);
   if(comp===0){new Notification('Training Reminder 💪',{body:"You haven't logged today's workout yet. Get it done!",icon:''});}
-}
-
-// ── SUMMARY ───────────────────────────────────────────────────
-function checkShowSummary(){
-  const comp=dayComp(ST.week,ST.dayIdx);
-  const day=bw(ST.week).days[ST.dayIdx];
-  if(day.sessions[0]?.type==='rest')return;
-  if(comp>=100&&ST.workoutStartTime&&!ST.summaryData){
-    const elapsed=Math.round((Date.now()-ST.workoutStartTime)/60000);
-    const vol=calcVolume(ST.week,ST.dayIdx);
-    let sets=0;const ch=getCh();day.sessions.forEach((s,si)=>{if(s.exercises)s.exercises.forEach((ex,ei)=>{for(let i=0;i<ex.s;i++){if(ch[`${si}-${ei}-${i}`])sets++;}});});
-    const prs=[];day.sessions.forEach((s)=>{if(!s.exercises)return;s.exercises.forEach((ex)=>{if(ex.bw)return;const wt=getW(ex.n,ST.week);if(wt&&checkAndSetPR(ex.n,wt))prs.push({name:ex.n,weight:wt});});});
-    ST.summaryData={elapsed,vol,sets,prs};render();
-  }
 }
 
 // ── CALENDAR ──────────────────────────────────────────────────
@@ -594,14 +610,20 @@ function render(){
   let h=`<div id="timer-sheet" class="timer-sheet" style="display:none"></div>`;
 
   if(ST.view==='workout'){
-    // Check if today's workout needs reminder
-    const isToday=todayProg&&ST.week===todayProg.week&&ST.dayIdx===todayProg.dayIdx;
+    // Count completed sets for showing the complete button
+    let anySetsStarted=ST.workoutStartTime!==null||Object.keys(ch).length>0;
+
+    const elapsedBadge=ST.workoutStartTime
+      ?`<div class="elapsed-badge"><span class="elapsed-dot"></span><span id="workout-elapsed">${fmtElapsed()}</span></div>`
+      :'';
+
     h+=`<div class="pad">
     <div class="date-sel-outer">
       <button type="button" class="date-sel-btn" onclick="openCal()">
         <div class="date-sel-meta">
           <div class="date-sel-main">${fmtDate(curDate)}</div>
           <div class="date-sel-sub">${day.label}${comp>0?' · '+comp+'% complete':''}</div>
+          ${elapsedBadge}
         </div>
         <span class="date-sel-status ${sched.cls}">${sched.label}</span>
       </button>
@@ -620,7 +642,6 @@ function render(){
         ${!ses.exercises?`<div class="run-check-wrap" onclick="togRun(${si})"><div class="cb ${runDone?'done':''}">${runDone?chk('#fff'):''}</div></div>`:''}
       </div>`;
 
-      // Run log form for run sessions
       if(ses.type==='run'||ses.type==='rest'&&!ses.exercises){
         h+=`<div class="run-log-form">
           <div class="run-log-title">Log this run</div>
@@ -649,30 +670,18 @@ function render(){
                 <span class="meta-chip">${ex.s} sets</span>
                 <span class="meta-chip">${ex.r} reps</span>
                 ${!ex.bw&&wt!==null?`<div class="wt-row"><button class="wt-btn" onclick="adjWt('${displayName.replace(/'/g,"\\'")}',${ST.week},-2.5,event)">−</button><span class="meta-chip weight">${wt} kg</span><button class="wt-btn" onclick="adjWt('${displayName.replace(/'/g,"\\'")}',${ST.week},2.5,event)">+</button></div>`:ex.bw?`<span class="meta-chip">Bodyweight</span>`:''}
-                ${hasSwaps?`<button onclick="openSwap('${origName.replace(/'/g,"\\'")}')" style="margin: 16px; font-size:14px;color:var(--muted);background:var(--card2);border:1px solid var(--border);border-radius:999px;padding:8px 16px; width: 100%;margin-top: 8px; cursor:pointer">⇄ Swap</button>`:''}
-                ${swapName?`<button onclick="clearSwap('${origName.replace(/'/g,"\\'")}')" style="font-size:12px;color:#ff4a6e;background:#ff4a6e11;border:1px solid #ff4a6e33;border-radius:999px;padding:8px 16px; width: 100%;cursor:pointer">✕ Restore</button>`:''}
+                ${hasSwaps?`<button onclick="openSwap('${origName.replace(/'/g,"\\'")}')" style="margin:16px;font-size:14px;color:var(--muted);background:var(--card2);border:1px solid var(--border);border-radius:999px;padding:8px 16px;width:100%;margin-top:8px;cursor:pointer">⇄ Swap</button>`:''}
+                ${swapName?`<button onclick="clearSwap('${origName.replace(/'/g,"\\'")}')" style="font-size:12px;color:#ff4a6e;background:#ff4a6e11;border:1px solid #ff4a6e33;border-radius:999px;padding:8px 16px;width:100%;cursor:pointer">✕ Restore</button>`:''}
               </div>
             </div>
             <div class="ex-status">${ad?'✓':ds>0?`${ds}/${ex.s}`:''}</div>
           </div>
           <div class="sets-row">`;
-for (let i = 0; i < ex.s; i++) {
-  const done = !!ch[`${si}-${ei}-${i}`];
-  h += `
-    <button 
-      type="button" 
-      class="set-btn ${done ? 'is-done' : ''}" 
-      data-si="${si}" 
-      data-ei="${ei}" 
-      data-idx="${i}">
-      
-      Set ${i+1}
-      <div class="cb ${done ? 'done' : ''}">
-        ${done ? chk('#fff') : ''}
-      </div>
-    </button>`;
-}          h+=`</div>`;
-          // Progression nudge
+          for(let i=0;i<ex.s;i++){
+            const done=!!ch[`${si}-${ei}-${i}`];
+            h+=`<button type="button" class="set-btn ${done?'is-done':''}" data-si="${si}" data-ei="${ei}" data-idx="${i}">Set ${i+1}<div class="cb ${done?'done':''}">${done?chk('#fff'):''}</div></button>`;
+          }
+          h+=`</div>`;
           if(!ex.bw&&wt){const nudge=getNudge(displayName,wt,ex.s,parseInt(ex.r)||10);if(nudge){const nk=nudge.nudgeKey.replace(/'/g,"\\'");h+=`<div class="prog-nudge"><div class="prog-nudge-icon">📈</div><div class="prog-nudge-text"><strong>Ready to progress?</strong>You've hit ${nudge.sets}×${parseInt(ex.r)||10} at ${nudge.weight} kg ${nudge.distinctDays} times — try <strong style="color:var(--accent)">${nudge.nextWeight} kg</strong> next time!</div><button class="prog-nudge-dismiss" onclick="dismissNudge('${nk}',event)" title="Dismiss">×</button></div>`;}}
           h+=`</div>`;
         });
@@ -680,13 +689,17 @@ for (let i = 0; i < ex.s; i++) {
       h+=`</div>`;
     });
 
-    // Notes
     const noteKey=`${ST.week}-${ST.dayIdx}`;
     h+=`<div class="notes-block">
       <div class="notes-label">📝 Session notes</div>
       <textarea id="notes-ta" placeholder="How did it feel? Any injuries, PRs, or wins..." onchange="saveNote(this.value)">${NOTES[noteKey]||''}</textarea>
     </div>`;
     h+=`</div>`;
+
+    // Complete workout button — shown once any set has been ticked
+    if(anySetsStarted&&day.sessions[0]?.type!=='rest'){
+      h+=`<button class="cw-btn" onclick="showCompleteConfirm()">✓ Complete Workout</button>`;
+    }
 
   }else if(ST.view==='progress'){
     const weeksByMonth={};
@@ -702,14 +715,12 @@ for (let i = 0; i < ex.s; i++) {
       <div class="stat-card"><div class="stat-val">${streak}</div><div class="stat-lbl">Week streak</div></div>
     </div>`;
 
-    // Volume chart
     const vols=Array.from({length:16},(_,i)=>calcWeekVolume(i+1));
     const maxVol=Math.max(...vols,1);
     h+=`<div class="vol-chart-wrap"><div class="vol-chart-title">📊 Weekly Volume (kg lifted)</div><div class="vol-bars">`;
     vols.forEach((v,i)=>{const w=i+1,cur=w===ST.week,pct=Math.round(v/maxVol*100);h+=`<div class="vol-bar-col"><div class="vol-bar-inner"><div class="vol-bar ${cur?'cur':''}" style="height:${pct||2}%"></div></div><div class="vol-bar-lbl">${w}</div></div>`;});
     h+=`</div></div>`;
 
-    // PRs
     const prEntries=Object.entries(PRS).filter(([,v])=>v>0);
     if(prEntries.length){
       h+=`<div class="bk-section"><h3>🏆 Personal Records</h3>`;
@@ -785,22 +796,46 @@ for (let i = 0; i < ex.s; i++) {
     </div></div>`;
   }
 
-  // Summary modal
-  if(ST.summaryData){
-    const sd=ST.summaryData;
-    h+=`<div class="summary-overlay"><div class="summary-modal">
-      <div class="summary-emoji">🎉</div>
-      <div class="summary-title">Workout Complete!</div>
-      <div class="summary-sub">${bw(ST.week).days[ST.dayIdx].name} · W${ST.week}</div>
-      <div class="summary-stats">
-        <div class="summary-stat"><div class="summary-stat-val">${sd.sets}</div><div class="summary-stat-lbl">Sets done</div></div>
-        <div class="summary-stat"><div class="summary-stat-val">${sd.elapsed}m</div><div class="summary-stat-lbl">Duration</div></div>
-        <div class="summary-stat"><div class="summary-stat-val">${sd.vol>0?Math.round(sd.vol)+'kg':'—'}</div><div class="summary-stat-lbl">Volume</div></div>
-      </div>
-      ${sd.prs.length?`<div class="summary-prs"><div class="summary-prs-title">🏆 New Personal Records</div>${sd.prs.map(p=>`<div class="summary-pr-item">• ${p.name} — ${p.weight} kg</div>`).join('')}</div>`:''}
-      ${(()=>{const nudges=getActiveNudges();if(!nudges.length)return'';return`<div class="summary-prs" style="background:rgba(0,255,127,.07);border-color:rgba(0,255,127,.25)"><div class="summary-prs-title" style="color:var(--accent)">📈 Progression Ready</div>${nudges.map(n=>`<div class="summary-pr-item">• ${n.exName} — try <strong style="color:var(--accent)">${n.nextWeight} kg</strong> (hit ${n.weight} kg × ${n.distinctDays} sessions)</div>`).join('')}</div>`;})()}
-      <button class="summary-close" onclick="closeSummary()">Done</button>
+  // Confirm complete modal
+  if(ST.confirmOpen){
+    h+=`<div class="confirm-overlay" onclick="cancelComplete()"><div class="confirm-modal" onclick="event.stopPropagation()">
+      <div class="confirm-modal-title">Complete workout?</div>
+      <div class="confirm-modal-sub">This will mark your session as done and save all progress. Great work getting it in!</div>
+      <button class="confirm-yes" onclick="confirmComplete()">Yes, I'm done! 💪</button>
+      <button class="confirm-no" onclick="cancelComplete()">Keep going</button>
     </div></div>`;
+  }
+
+  // Success screen
+  if(ST.successData){
+    const sd=ST.successData;
+    const nudges=getActiveNudges();
+    h+=`<div class="success-screen">
+      <div class="success-bg"></div>
+      <div class="success-particles">${genParticles()}</div>
+      <div class="success-body">
+        <div class="success-tag">Week ${ST.week} · ${day.name}</div>
+        <div class="success-h1">great job!</div>
+        <div class="success-h2">on your<br>workout</div>
+        <div class="success-pills">
+          <span class="success-pill">⏱ ${sd.elapsed}m</span>
+          <span class="success-pill">💪 ${sd.sets} sets</span>
+          ${sd.vol>0?`<span class="success-pill">🏋️ ${Math.round(sd.vol)} kg</span>`:''}
+          ${sd.prs.length?`<span class="success-pill">🏆 ${sd.prs.length} PR${sd.prs.length>1?'s':''}</span>`:''}
+        </div>
+        ${sd.prs.length?`<div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">${sd.prs.map(p=>`${p.name} — ${p.weight} kg`).join(' · ')}</div>`:''}
+        ${nudges.length?`<div style="font-size:13px;color:rgba(59,102,255,0.85);margin-bottom:8px">📈 ${nudges.map(n=>`${n.exName} → try ${n.nextWeight} kg`).join(' · ')}</div>`:''}
+        <div class="success-desc">Hold on while we build your custom plan for next session.</div>
+      </div>
+      <div class="success-bar">
+        <div class="success-icon-btn" onclick="closeSuccess()">↩</div>
+        <button class="success-done-btn" onclick="closeSuccess()">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9.5l4.5 4.5 9-9" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Done
+        </button>
+        <div class="success-icon-btn" onclick="setView('progress')">📊</div>
+      </div>
+    </div>`;
   }
 
   // Bottom tab bar
@@ -815,7 +850,6 @@ for (let i = 0; i < ex.s; i++) {
   if(ST.calOpen)renderCalModal();
   queueMicrotask(attachSetGestures);
 }
-
 
 function attachSetGestures(){
   document.querySelectorAll('.set-btn[data-si]').forEach(btn=>{
@@ -832,22 +866,21 @@ function attachSetGestures(){
 // ── HANDLERS ─────────────────────────────────────────────────
 window.setView=v=>{ST.view=v;ST.calOpen=false;render();};
 window.openCal=openCal;window.calNavMonth=calNavMonth;window.calClickDate=calClickDate;window.calConfirm=calConfirm;window.calCancel=calCancel;
-window.calSelDay=(w,di)=>{ST.week=w;ST.dayIdx=di;ST.view='workout';ST.workoutStartTime=null;ST.summaryData=null;render();};
-window.jumpToday=()=>{const tp=dateToProgram(new Date());if(!tp)return;ST.week=tp.week;ST.dayIdx=tp.dayIdx;ST.summaryData=null;render();};
+window.calSelDay=(w,di)=>{ST.week=w;ST.dayIdx=di;ST.view='workout';ST.workoutStartTime=null;ST.summaryData=null;ST.successData=null;render();};
+window.jumpToday=()=>{const tp=dateToProgram(new Date());if(!tp)return;ST.week=tp.week;ST.dayIdx=tp.dayIdx;ST.summaryData=null;ST.successData=null;render();};
 
 window.togSet=(si,ei,idx)=>{
   const key=`${si}-${ei}-${idx}`,ch={...getCh()};
   const prev=!!ch[key];ch[key]=!ch[key];setCh(ch);
-  if(ch[key]&&!prev)startTimer();else if(!ch[key])stopTimer();
+  if(ch[key]&&!prev){startTimer();}else if(!ch[key])stopTimer();
   if(ch[key]){const ex=bw(ST.week).days[ST.dayIdx].sessions[si]?.exercises?.[ei];if(ex&&!ex.bw){const wt=getW(ex.n,ST.week);if(wt)checkAndSetPR(ex.n,wt);}}
-  // Check if all sets for this exercise are now complete → record performance
   const ex=bw(ST.week).days[ST.dayIdx].sessions[si]?.exercises?.[ei];
   if(ex&&!ex.bw&&ch[key]){
     const wt=getW(ex.n,ST.week);
     const allDone=Array.from({length:ex.s},(_,i)=>!!ch[`${si}-${ei}-${i}`]).every(Boolean);
     if(allDone&&wt)checkExerciseComplete(ex.n,wt,ex.s,parseInt(ex.r)||10,ST.week,ST.dayIdx);
   }
-  render();checkShowSummary();
+  render();
   if(CFG.url)syncPush();
 };
 window.togRun=si=>{const key=`run-${si}`,ch={...getCh()};ch[key]=!ch[key];setCh(ch);render();if(CFG.url)syncPush();};
@@ -864,7 +897,35 @@ window.closeSwap=()=>{ST.swapModal=null;render();};
 window.doSwap=(orig,newName)=>{SWAPPED[`${ST.week}-${ST.dayIdx}-${orig}`]=newName;ST.swapModal=null;sv();render();};
 window.clearSwap=orig=>{delete SWAPPED[`${ST.week}-${ST.dayIdx}-${orig}`];sv();render();};
 
-window.closeSummary=()=>{ST.summaryData=null;ST.workoutStartTime=null;render();};
+// Complete workout flow
+window.showCompleteConfirm=()=>{ST.confirmOpen=true;render();};
+window.cancelComplete=()=>{ST.confirmOpen=false;render();};
+window.confirmComplete=()=>{
+  ST.confirmOpen=false;
+  const elapsed=ST.workoutStartTime?Math.max(1,Math.round((Date.now()-ST.workoutStartTime)/60000)):0;
+  const vol=calcVolume(ST.week,ST.dayIdx);
+  let sets=0;const ch=getCh();
+  bw(ST.week).days[ST.dayIdx].sessions.forEach((s,si)=>{
+    if(s.exercises)s.exercises.forEach((ex,ei)=>{for(let i=0;i<ex.s;i++){if(ch[`${si}-${ei}-${i}`])sets++;}});
+  });
+  const prs=[];
+  bw(ST.week).days[ST.dayIdx].sessions.forEach(s=>{
+    if(!s.exercises)return;
+    s.exercises.forEach(ex=>{
+      if(ex.bw)return;
+      const wt=getW(ex.n,ST.week);
+      if(wt&&checkAndSetPR(ex.n,wt))prs.push({name:ex.n,weight:wt});
+    });
+  });
+  stopElapsedTick();
+  stopTimer();
+  ST.successData={elapsed,vol,sets,prs};
+  sv();
+  if(CFG.url)syncPush();
+  render();
+};
+window.closeSuccess=()=>{ST.successData=null;ST.workoutStartTime=null;stopElapsedTick();render();};
+
 window.requestNotifPermission=requestNotifPermission;
 window.scheduleWorkoutReminder=scheduleWorkoutReminder;
 
@@ -878,18 +939,11 @@ window.doReset=()=>{if(confirm('Reset ALL data? This cannot be undone.')){ST.pro
   bar.className='offline-bar';
   bar.innerHTML='<div class="offline-dot"></div>Offline — changes saved locally, will sync when back online';
   document.body.appendChild(bar);
-
-  function update(){
-    const offline=!navigator.onLine;
-    bar.classList.toggle('visible', offline);
-    document.body.classList.toggle('offline', offline);
-  }
-  window.addEventListener('online', ()=>{ update(); syncPush(); });
-  window.addEventListener('offline', update);
+  function update(){const offline=!navigator.onLine;bar.classList.toggle('visible',offline);document.body.classList.toggle('offline',offline);}
+  window.addEventListener('online',()=>{update();syncPush();});
+  window.addEventListener('offline',update);
   update();
-
-  // Heartbeat: push every 5 minutes while online
-  setInterval(()=>{ if(navigator.onLine) syncPush(); }, 5*60*1000);
+  setInterval(()=>{if(navigator.onLine)syncPush();},5*60*1000);
 })();
 
 // ── INIT ─────────────────────────────────────────────────────

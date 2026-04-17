@@ -70,7 +70,7 @@ body.workout-view.timer-on{padding-bottom:70px)}
 .workout-action-btn-fixed.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
 .workout-action-btn-fixed.fixed-pause{background:rgba(255,255,255,0.50);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
 .workout-action-btn-fixed.fixed-start{background:#FFC4EC}
-.date-sel-btn{width:100%;height:75vh;position:relative;background:#000;overflow:hidden;border-radius:32px;border:0;display:block;text-align:left;cursor:pointer;background-size:cover;background-position:center;background-image:url('../002.jpg')}
+.date-sel-btn{width:100%;height:75vh;position:relative;background:#000;overflow:hidden;border-radius:32px;border:0;display:block;text-align:left;cursor:pointer;background-size:cover;background-position:center;background-image:url('https://github.com/vikberlin/workout-tracker/blob/main/002-2.jpg?raw=true')}
 .date-sel-content{position:absolute;inset:0;padding:32px;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch}
 .back-today-btn{width:100%;height:75px;padding:8px 32px 8px 8px;background:rgba(255,255,255,0.15);overflow:hidden;border-radius:999px;border:none;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .back-today-icon{width:63px;height:63px;border-radius:999px;background:#ffffff;display:flex;justify-content:center;align-items:center;flex-shrink:0}
@@ -172,8 +172,8 @@ body.workout-view.timer-on{padding-bottom:70px)}
 .notes-label{padding:0 0 8px 0;font-size:16px;font-weight:400;color:var(--muted)}
 
 /* ── VOLUME CHART ── */
-.vol-chart-wrap{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;padding:18px;margin-bottom:18px}
-.vol-chart-title{font-size:13px;font-weight:800;margin-bottom:14px;color:var(--muted)}
+.vol-chart-wrap{background:transparent;border:1.5px solid var(--border);border-radius:32px;padding:24px;margin-bottom:16px}
+.vol-chart-title{font-size:16px;font-weight:500;margin-bottom:16px;color:#FFFFFF}
 .vol-bars{display:flex;align-items:flex-end;gap:8px;height:90px}
 .vol-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
 .vol-bar-inner{width:100%;display:flex;align-items:flex-end;height:72px}
@@ -183,26 +183,34 @@ body.workout-view.timer-on{padding-bottom:70px)}
 
 /* ── PROGRESS TAB ── */
 .prog-month-section{margin-bottom:24px}
-.prog-month-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding:0 2px}
-.prog-week-card{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;padding:18px 20px;margin-bottom:14px;cursor:pointer}
-.prog-week-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.prog-week-label{font-size:16px;font-weight:600;color:#FFFFFF}
-.prog-week-pct{font-size:16px;font-weight:700;color:var(--accent)}
+.prog-month-title{font-size:16px;font-weight:500;color:var(--muted);margin-bottom:12px;padding:0 2px}
+.prog-week-card{background:transparent;border:1.5px solid var(--border);border-radius:32px;padding:20px 24px;margin-bottom:14px;cursor:pointer}
+.prog-week-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.prog-week-label{font-size:20px;font-weight:500;color:#FFFFFF}
+.prog-week-pct{font-size:20px;font-weight:500;color:var(--accent)}
 .prog-week-pct.zero{color:var(--muted)}
 .prog-bar-bg{width:100%;height:10px;background:rgba(255,255,255,0.18);border-radius:999px;overflow:hidden}
 .prog-bar-fill{height:100%;border-radius:999px;background:var(--accent);transition:width .4s}
-.prog-week-days{display:flex;gap:4px;margin-top:10px}
-.prog-day-pip{flex:1;height:4px;border-radius:999px;background:rgba(255,255,255,0.18)}
-.prog-day-pip.done{background:var(--accent)}
-.prog-day-pip.partial{background:rgba(0,255,127,0.45)}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
-.stat-card{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;padding:18px 16px;text-align:center}
-.stat-val{font-size:clamp(1.15rem,3.5vw + .4rem,1.45rem);font-weight:800;color:var(--accent)}
-.stat-lbl{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
+.prog-day-chart{display:flex;gap:5px;margin-top:16px}
+.prog-day-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.prog-day-col-bars{width:100%;display:flex;gap:2px;align-items:flex-end;height:56px}
+.prog-day-col-bar{flex:1;border-radius:5px 5px 2px 2px;transition:height .4s ease}
+.prog-day-col-bar.strength{background:#FFC4EC}
+.prog-day-col-bar.cardio{background:var(--accent-yellow)}
+.prog-day-col-bar.rest-bar{height:3px;background:rgba(255,255,255,0.12);border-radius:999px;align-self:center}
+.prog-day-col-bar.no-data{height:3px;background:rgba(255,255,255,0.10);border-radius:999px;align-self:center}
+.prog-day-col-name{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.prog-chart-legend{display:flex;gap:12px;margin-top:12px}
+.prog-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.prog-legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.stat-card{background:transparent;border:1.5px solid var(--border);border-radius:32px;padding:20px 12px;text-align:center}
+.stat-val{font-size:clamp(1.3rem,4vw,1.6rem);font-weight:500;color:var(--accent)}
+.stat-lbl{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
 
 /* ── BACKUP TAB ── */
-.bk-section{background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:20px;padding:18px;margin-bottom:16px}
-.bk-section h3{font-size:17px;font-weight:700;margin-bottom:12px;color:#FFFFFF}
+.bk-section{background:transparent;border:1.5px solid var(--border);border-radius:32px;padding:24px;margin-bottom:16px}
+.bk-section h3{font-size:20px;font-weight:500;margin-bottom:16px;color:#FFFFFF}
 .bk-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .bk-btn{flex:1;min-width:120px;padding:12px 14px;border-radius:999px;font-size:15px;font-weight:700;border:1px solid var(--border);text-align:center;cursor:pointer}
 .bk-green{background:#000;border-color:rgba(0,255,127,0.30);color:#FFFFFF}
@@ -782,13 +790,39 @@ function render(){
 
     Object.entries(weeksByMonth).forEach(([monthLabel,weeks])=>{
       h+=`<div class="prog-month-section"><div class="prog-month-title">${monthLabel}</div>`;
+      const DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
       weeks.forEach(w=>{
         const comp=weekComp(w),isCur=w===ST.week;
-        const dayPips=bw(w).days.map((_,di)=>{if(bw(w).days[di].sessions[0]?.type==='rest')return'rest';const c=dayComp(w,di);return c===100?'done':c>0?'partial':'empty';});
+        const dayChartData=bw(w).days.map((day,di)=>{
+          const name=DN[programToDate(w,di).getDay()];
+          if(day.sessions[0]?.type==='rest')return{name,isRest:true,strPct:null,carPct:null};
+          const ch=ST.progress[`${w}-${di}`]||{};
+          let strT=0,strD=0,carT=0,carD=0;
+          day.sessions.forEach((ses,si)=>{
+            if(ses.type==='run'){carT++;if(ch[`run-${si}`])carD++;}
+            else if(ses.exercises)ses.exercises.forEach((ex,ei)=>{for(let i=0;i<ex.s;i++){strT++;if(ch[`${si}-${ei}-${i}`])strD++;}});
+          });
+          return{name,isRest:false,strPct:strT>0?Math.round(strD/strT*100):null,carPct:carT>0?Math.round(carD/carT*100):null};
+        });
+        const hasCardio=dayChartData.some(d=>d.carPct!==null);
+        const hasStrength=dayChartData.some(d=>d.strPct!==null);
+        const chartCols=dayChartData.map(d=>{
+          let bars='';
+          if(d.isRest){bars=`<div class="prog-day-col-bar rest-bar" style="width:100%"></div>`;}
+          else if(d.strPct===null&&d.carPct===null){bars=`<div class="prog-day-col-bar no-data" style="width:100%"></div>`;}
+          else{
+            if(d.strPct!==null)bars+=`<div class="prog-day-col-bar strength" style="height:${Math.max(d.strPct,4)}%"></div>`;
+            if(d.carPct!==null)bars+=`<div class="prog-day-col-bar cardio" style="height:${Math.max(d.carPct,4)}%"></div>`;
+          }
+          return`<div class="prog-day-col" style="${d.isRest?'opacity:0.3':''}"><div class="prog-day-col-bars">${bars}</div><div class="prog-day-col-name">${d.name}</div></div>`;
+        }).join('');
+        const legend=(hasStrength?`<div class="prog-legend-item"><div class="prog-legend-dot" style="background:#FFC4EC"></div>Strength</div>`:'')+
+                     (hasCardio?`<div class="prog-legend-item"><div class="prog-legend-dot" style="background:var(--accent-yellow)"></div>Cardio</div>`:'');
         h+=`<div class="prog-week-card" style="${isCur?'border-color:rgba(0,255,127,0.35)':''}" onclick="calSelDay(${w},0)">
-          <div class="prog-week-top"><div class="prog-week-label">Week ${w} ${isCur?'<span style="font-size:10px;color:var(--accent);font-weight:700;margin-left:4px">NOW</span>':''}</div><div class="prog-week-pct ${comp===0?'zero':''}">${comp>0?comp+'%':'—'}</div></div>
+          <div class="prog-week-top"><div class="prog-week-label">Week ${w} ${isCur?'<span style="font-size:11px;color:var(--accent);font-weight:500;margin-left:6px">Now</span>':''}</div><div class="prog-week-pct ${comp===0?'zero':''}">${comp>0?comp+'%':'—'}</div></div>
           <div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${comp}%"></div></div>
-          <div class="prog-week-days">${dayPips.map(p=>`<div class="prog-day-pip ${p==='done'?'done':p==='partial'?'partial':''}" style="${p==='rest'?'background:var(--card2)':''}"></div>`).join('')}</div>
+          <div class="prog-day-chart">${chartCols}</div>
+          ${legend?`<div class="prog-chart-legend">${legend}</div>`:''}
         </div>`;
       });
       h+=`</div>`;
